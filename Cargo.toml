@@ -10,3 +10,4 @@ actix-web = "4.5.1"
 actix-rt = "2.9.0"
 
 dotenv = "0.15.0"
+serde = { version = "1.0.197", features = ["derive"] }
