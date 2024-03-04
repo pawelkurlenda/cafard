@@ -2,6 +2,7 @@ mod state;
 mod routes;
 mod models;
 mod handlers;
+mod cache;
 
 use dotenv::dotenv;
 use std::env;
