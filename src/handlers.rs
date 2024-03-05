@@ -1,8 +1,8 @@
 use super::state::AppState;
-use actix_web::{web, HttpResponse};
+use actix_web::{HttpResponse, web};
 use crate::models::NewCache;
 
-pub fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
+pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
     let mut visit_count = app_state.visit_count.lock().unwrap();
     *visit_count += 1;
 
@@ -10,16 +10,14 @@ pub fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
     HttpResponse::Ok().json(response)
 }
 
-pub fn cache_put_handler(app_state: web::Data<AppState>, params: web::Path<(String,)>, new_cache: web::Json<NewCache>) -> HttpResponse {
-    let tuple = params.0;
-    let cache_key: String = tuple;
+pub async fn cache_get_handler(app_state: web::Data<AppState>, params: web::Path<(String)>) -> HttpResponse {
+    let cache_key = params.to_string();
 
-    HttpResponse::Ok().json(response)
+    HttpResponse::Ok().json(cache_key)
 }
 
-pub fn cache_get_handler(app_state: web::Data<AppState>, params: web::Path<(String,)>,) -> HttpResponse {
-    let tuple = params.0;
-    let cache_key: String = tuple;
+pub async fn cache_put_handler(app_state: web::Data<AppState>, params: web::Path<(String)>, new_cache: web::Json<NewCache>) -> HttpResponse {
+    let cache_key = params.to_string();
 
-    HttpResponse::Ok().json(response)
+    HttpResponse::Ok().json(new_cache)
 }

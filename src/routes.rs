@@ -8,7 +8,7 @@ pub fn general_routes(cfg: &mut web::ServiceConfig) {
 pub fn cache_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/cache")
-            .route("/{cache_key}", web::put().to(cache_put_handler))
             .route("/{cache_key}", web::get().to(cache_get_handler))
+            .route("/{cache_key}", web::put().to(cache_put_handler))
     );
 }

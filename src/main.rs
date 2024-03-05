@@ -12,8 +12,8 @@ use actix_web::{App, HttpServer, web};
 use crate::routes::{cache_routes, general_routes};
 use crate::state::AppState;
 
-#[actix_rt::main]
-async fn main() -> io::Result<()> {
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
     dotenv().ok();
     println!("Hello, world!");
 
@@ -34,5 +34,5 @@ async fn main() -> io::Result<()> {
 
     println!("Starting server at: {}", hostname_port);
 
-    HttpServer::new(app).bind(hostname_port).unwrap().run().await;
+    HttpServer::new(app).bind(hostname_port).unwrap().run().await
 }
