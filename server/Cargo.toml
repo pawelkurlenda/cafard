@@ -1,6 +1,5 @@
-workspace = { members = [ "cli","cli/Cargo", "server"] }
 [package]
-name = "cafard"
+name = "server"
 version = "0.1.0"
 edition = "2021"
 
