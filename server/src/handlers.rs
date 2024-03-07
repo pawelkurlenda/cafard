@@ -21,3 +21,9 @@ pub async fn cache_put_handler(app_state: web::Data<AppState>, params: web::Path
 
     HttpResponse::Ok().json(new_cache)
 }
+
+pub async fn cache_delete_handler(app_state: web::Data<AppState>, params: web::Path<(String)>, new_cache: web::Json<NewCache>) -> HttpResponse {
+    let cache_key = params.to_string();
+
+    HttpResponse::NoContent()
+}

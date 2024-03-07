@@ -10,5 +10,6 @@ pub fn cache_routes(cfg: &mut web::ServiceConfig) {
         web::scope("/cache")
             .route("/{cache_key}", web::get().to(cache_get_handler))
             .route("/{cache_key}", web::put().to(cache_put_handler))
+            .route("/{cache_key}", web::delete().to(cache_delete_handler))
     );
 }
