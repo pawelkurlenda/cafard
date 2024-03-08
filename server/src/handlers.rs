@@ -10,20 +10,20 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
     HttpResponse::Ok().json(response)
 }
 
-pub async fn cache_get_handler(app_state: web::Data<AppState>, params: web::Path<(String)>) -> HttpResponse {
+pub async fn cache_get_handler(params: web::Path<(String)>) -> HttpResponse {
     let cache_key = params.to_string();
 
     HttpResponse::Ok().json(cache_key)
 }
 
-pub async fn cache_put_handler(app_state: web::Data<AppState>, params: web::Path<(String)>, new_cache: web::Json<NewCache>) -> HttpResponse {
+pub async fn cache_put_handler(params: web::Path<(String)>, new_cache: web::Json<NewCache>) -> HttpResponse {
     let cache_key = params.to_string();
 
     HttpResponse::Ok().json(new_cache)
 }
 
-pub async fn cache_delete_handler(app_state: web::Data<AppState>, params: web::Path<(String)>, new_cache: web::Json<NewCache>) -> HttpResponse {
+pub async fn cache_delete_handler(params: web::Path<(String)>) -> HttpResponse {
     let cache_key = params.to_string();
 
-    HttpResponse::NoContent()
+    HttpResponse::Ok().json("")
 }
