@@ -1,9 +1,6 @@
 @url = http://127.0.0.1:3000
 
 ###
-GET {{url}}
-
-###
 GET {{url}}/health
 
 ###
@@ -15,7 +12,7 @@ Content-Type: application/json
 
 {
   "value": "test value",
-  "expiration_datetime": "2024.04.01T12:00:00.000Z"
+  "expiration_datetime": "2024-04-01T12:00:00.000Z"
 }
 
 ###
