@@ -10,6 +10,11 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
     HttpResponse::Ok().json(response)
 }
 
+pub async fn cache_keys_get_handler() -> HttpResponse {
+    let cache_keys = vec!["test_key_1", "test_key_1"];
+    HttpResponse::Ok().json(cache_keys)
+}
+
 pub async fn cache_get_handler(params: web::Path<(String)>) -> HttpResponse {
     let cache_key = params.to_string();
 

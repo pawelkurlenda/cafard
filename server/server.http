@@ -7,6 +7,9 @@ GET {{url}}/health
 GET {{url}}/cache/test_name
 
 ###
+GET {{url}}/cache/keys
+
+###
 PUT {{url}}/cache/test_name
 Content-Type: application/json
 
