@@ -5,6 +5,7 @@ pub struct AppState {
     pub visit_count: Mutex<u32>,
 }
 
+#[derive(Clone, Debug)]
 pub struct CacheState {
     pub key: String,
     pub value: String,
