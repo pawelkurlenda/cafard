@@ -8,3 +8,11 @@ pub struct MyJob {
     some_usize: usize,
     other_usize: usize,
 }
+
+impl MyState {
+    pub fn new(app_name: &str) -> Self {
+        MyState {
+            app_name: app_name.to_owned(),
+        }
+    }
+}
