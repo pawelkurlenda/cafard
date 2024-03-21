@@ -16,3 +16,12 @@ impl MyState {
         }
     }
 }
+
+impl MyJob {
+    pub fn new(some_usize: usize, other_usize: usize) -> Self {
+        MyJob {
+            some_usize,
+            other_usize,
+        }
+    }
+}
