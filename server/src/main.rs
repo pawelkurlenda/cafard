@@ -30,7 +30,9 @@ async fn main() -> std::io::Result<()> {
     });
 
     // Create an instance of your cache
-    let cache: Arc<Cache> = Cache::new();
+    let cache_shared_data = web::Data::new(CacheState {
+        cache: Cache::new()
+    });
 
     use background_jobs_core::memory_storage::Storage;
     let storage = Storage::new(ActixTimer);
@@ -47,7 +49,7 @@ async fn main() -> std::io::Result<()> {
     let app = move || {
         App::new()
             .app_data(shared_data.clone())
-            .app_data(cache.clone())
+            .app_data(cache_shared_data.clone())
             .configure(general_routes)
             .configure(cache_routes)
     };

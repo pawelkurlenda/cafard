@@ -7,6 +7,6 @@ pub struct AppState {
 }
 
 #[derive(Clone, Debug)]
-pub struct CacheState<T> {
-    pub cache: Arc<Cache<T>>,
+pub struct CacheState {
+    pub cache: Arc<Cache>,
 }
