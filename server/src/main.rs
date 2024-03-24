@@ -8,11 +8,12 @@ mod background_job;
 use dotenv::dotenv;
 use std::env;
 use std::io;
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use actix_web::{App, HttpServer, web};
 use background_jobs_actix::{ActixTimer, WorkerConfig};
 use crate::background_job::{DEFAULT_QUEUE, MyJob, MyState};
+use crate::cache::Cache;
 use crate::routes::{cache_routes, general_routes};
 use crate::state::{AppState, CacheState};
 
@@ -27,6 +28,9 @@ async fn main() -> std::io::Result<()> {
         health_check_response: "OK".to_string(),
         visit_count: Mutex::new(0),
     });
+
+    // Create an instance of your cache
+    let cache: Arc<Cache<String>> = Cache::new();
 
     use background_jobs_core::memory_storage::Storage;
     let storage = Storage::new(ActixTimer);
@@ -43,6 +47,7 @@ async fn main() -> std::io::Result<()> {
     let app = move || {
         App::new()
             .app_data(shared_data.clone())
+            .app_data(cache.clone())
             .configure(general_routes)
             .configure(cache_routes)
     };

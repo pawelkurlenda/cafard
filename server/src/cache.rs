@@ -2,27 +2,27 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::time::SystemTime;
 
-struct CacheItem<T> {
+pub struct CacheItem<T> {
     value: T,
     expire_datetime: SystemTime,
 }
 
 // Define the main cache structure
-struct Cache<T> {
+pub struct Cache<T> {
     items: Mutex<HashMap<String, CacheItem<T>>>,
 }
 
 // Implementation of the Cache
 impl<T> Cache<T> {
     // Constructor for the Cache
-    fn new() -> Arc<Self> {
+    pub fn new() -> Arc<Self> {
         Arc::new(Cache {
             items: Mutex::new(HashMap::new()),
         })
     }
 
     // Function to add items to the cache
-    fn set(&self, key: String, value: T, expire_datetime: SystemTime) {
+    pub fn set(&self, key: String, value: T, expire_datetime: SystemTime) {
         let mut items = self.items.lock().unwrap();
         items.insert(
             key,
@@ -34,7 +34,7 @@ impl<T> Cache<T> {
     }
 
     // Function to retrieve items from the cache
-    fn get(&self, key: &str) -> Option<T>
+    pub fn get(&self, key: &str) -> Option<T>
         where
             T: Clone,
     {

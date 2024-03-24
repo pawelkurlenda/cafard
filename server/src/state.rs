@@ -1,4 +1,5 @@
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
+use crate::cache::Cache;
 
 pub struct AppState {
     pub health_check_response: String,
@@ -6,8 +7,6 @@ pub struct AppState {
 }
 
 #[derive(Clone, Debug)]
-pub struct CacheState {
-    pub key: String,
-    pub value: String,
-    pub expiration_datetime: chrono::DateTime<chrono::Utc>
+pub struct CacheState<T> {
+    pub cache: Arc<Cache<T>>,
 }
