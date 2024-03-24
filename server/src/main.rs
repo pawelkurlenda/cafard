@@ -30,7 +30,7 @@ async fn main() -> std::io::Result<()> {
     });
 
     // Create an instance of your cache
-    let cache: Arc<Cache<String>> = Cache::new();
+    let cache: Arc<Cache> = Cache::new();
 
     use background_jobs_core::memory_storage::Storage;
     let storage = Storage::new(ActixTimer);

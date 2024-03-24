@@ -2,18 +2,18 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::time::SystemTime;
 
-pub struct CacheItem<T> {
-    value: T,
+pub struct CacheItem {
+    value: String,
     expire_datetime: SystemTime,
 }
 
 // Define the main cache structure
-pub struct Cache<T> {
-    items: Mutex<HashMap<String, CacheItem<T>>>,
+pub struct Cache {
+    items: Mutex<HashMap<String, CacheItem>>,
 }
 
 // Implementation of the Cache
-impl<T> Cache<T> {
+impl Cache {
     // Constructor for the Cache
     pub fn new() -> Arc<Self> {
         Arc::new(Cache {
@@ -22,7 +22,7 @@ impl<T> Cache<T> {
     }
 
     // Function to add items to the cache
-    pub fn set(&self, key: String, value: T, expire_datetime: SystemTime) {
+    pub fn set(&self, key: String, value: String, expire_datetime: SystemTime) {
         let mut items = self.items.lock().unwrap();
         items.insert(
             key,
@@ -34,9 +34,9 @@ impl<T> Cache<T> {
     }
 
     // Function to retrieve items from the cache
-    pub fn get(&self, key: &str) -> Option<T>
-        where
-            T: Clone,
+    pub fn get(&self, key: &str) -> Option<String>
+        //where
+        //    T: Clone,
     {
         let items = self.items.lock().unwrap();
         items.get(key).and_then(|item| {
