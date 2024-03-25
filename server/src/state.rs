@@ -6,7 +6,7 @@ pub struct AppState {
     pub visit_count: Mutex<u32>,
 }
 
-#[derive(Clone, Debug)]
+//#[derive(Clone, Debug)]
 pub struct CacheState {
     pub cache: Arc<Cache>,
 }

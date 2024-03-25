@@ -38,27 +38,28 @@ impl Cache {
         //where
         //    T: Clone,
     {
-        let items = self.items.lock().unwrap();
-        items.get(key).and_then(|item| {
+        let mut items = self.items.lock().unwrap();
+        if let Some(item) = items.get(key) {
             if item.expire_datetime > DateTime::now() {
                 Some(item.value.clone())
             } else {
+                // If the item is expired, remove it from the cache
+                items.remove(key);
                 None
             }
-        })
+        } else {
+            None
+        }
+    }
+
+    pub fn delete(&self, key: &str) {
+        let mut items = self.items.lock().unwrap();
+        items.remove(key);
     }
 }
 
-pub struct CacheModel {
+/*pub struct CacheModel {
     key: String,
     value: String,
     pub expiration_datetime: chrono::DateTime<chrono::Utc>
-}
-
-pub fn add_or_update() {
-
-}
-
-pub fn delete(key: &str) {
-
-}
+}*/
