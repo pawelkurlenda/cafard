@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use std::time::SystemTime;
+use chrono::DateTime;
 
 pub struct CacheItem {
     value: String,
-    expire_datetime: SystemTime,
+    expire_datetime: chrono::DateTime<chrono::Utc>,
 }
 
 // Define the main cache structure
@@ -22,7 +22,7 @@ impl Cache {
     }
 
     // Function to add items to the cache
-    pub fn set(&self, key: String, value: String, expire_datetime: SystemTime) {
+    pub fn set(&self, key: String, value: String, expire_datetime: chrono::DateTime<chrono::Utc>) {
         let mut items = self.items.lock().unwrap();
         items.insert(
             key,
@@ -40,7 +40,7 @@ impl Cache {
     {
         let items = self.items.lock().unwrap();
         items.get(key).and_then(|item| {
-            if item.expire_datetime > SystemTime::now() {
+            if item.expire_datetime > DateTime::now() {
                 Some(item.value.clone())
             } else {
                 None
