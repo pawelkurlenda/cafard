@@ -1,12 +1,13 @@
 use std::future::{ready, Ready};
 use background_jobs_core::{Backoff, Job, MaxRetries, BoxError};
+use crate::state::CacheState;
 
 pub const DEFAULT_QUEUE: &'static str = "default";
 
-#[derive(Clone, Debug)]
+/*#[derive(Clone, Debug)]
 pub struct MyState {
     pub app_name: String,
-}
+}*/
 
 #[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
 pub struct MyJob {
@@ -14,13 +15,13 @@ pub struct MyJob {
     other_usize: usize,
 }
 
-impl MyState {
+/*impl MyState {
     pub fn new(app_name: &str) -> Self {
         MyState {
             app_name: app_name.to_owned(),
         }
     }
-}
+}*/
 
 impl MyJob {
     pub fn new(some_usize: usize, other_usize: usize) -> Self {
@@ -32,7 +33,7 @@ impl MyJob {
 }
 
 impl Job for MyJob {
-    type State = MyState;
+    type State = CacheState;
     type Error = BoxError;
     type Future = Ready<Result<(), BoxError>>;
 
@@ -67,8 +68,9 @@ impl Job for MyJob {
     // Defaults to 5 seconds
     const HEARTBEAT_INTERVAL: u64 = 5_000;
 
-    fn run(self, state: MyState) -> Self::Future {
-        println!("{}: args, {:?}", state.app_name, self);
+    fn run(self, state: CacheState) -> Self::Future {
+        //println!("state : {:?}", state);
+        //println!("self : {:?}", self);
 
         ready(Ok(()))
     }
