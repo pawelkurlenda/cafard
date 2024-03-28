@@ -1,4 +1,5 @@
 use std::future::{ready, Ready};
+use actix_web::web;
 use background_jobs_core::{Backoff, Job, MaxRetries, BoxError};
 use crate::state::CacheState;
 
@@ -11,8 +12,6 @@ pub struct MyState {
 
 #[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
 pub struct MyJob {
-    some_usize: usize,
-    other_usize: usize,
 }
 
 /*impl MyState {
@@ -24,16 +23,14 @@ pub struct MyJob {
 }*/
 
 impl MyJob {
-    pub fn new(some_usize: usize, other_usize: usize) -> Self {
+    pub fn new() -> Self {
         MyJob {
-            some_usize,
-            other_usize,
         }
     }
 }
 
 impl Job for MyJob {
-    type State = CacheState;
+    type State = web::Data<CacheState>;
     type Error = BoxError;
     type Future = Ready<Result<(), BoxError>>;
 
@@ -68,7 +65,7 @@ impl Job for MyJob {
     // Defaults to 5 seconds
     const HEARTBEAT_INTERVAL: u64 = 5_000;
 
-    fn run(self, state: CacheState) -> Self::Future {
+    fn run(self, state: web::Data<CacheState>) -> Self::Future {
         //println!("state : {:?}", state);
         //println!("self : {:?}", self);
 

@@ -1,13 +1,14 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use chrono::DateTime;
+use chrono::{DateTime, Utc};
 
+#[derive(Clone, Debug)]
 pub struct CacheItem {
     value: String,
     expire_datetime: chrono::DateTime<chrono::Utc>,
 }
 
-// Define the main cache structure
+#[derive(Debug)]
 pub struct Cache {
     items: Mutex<HashMap<String, CacheItem>>,
 }
@@ -40,7 +41,7 @@ impl Cache {
     {
         let mut items = self.items.lock().unwrap();
         if let Some(item) = items.get(key) {
-            if item.expire_datetime > DateTime::now() {
+            if item.expire_datetime > Utc::now() {
                 Some(item.value.clone())
             } else {
                 // If the item is expired, remove it from the cache
