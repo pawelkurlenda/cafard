@@ -12,6 +12,7 @@ background-jobs-core = "0.18.0"
 dotenv = "0.15.0"
 serde = { version = "1.0.197", features = ["derive"] }
 chrono = { version = "0.4.35", features = ["serde"]}
+cafard = { path = "../sdk" }
 
 [dev-dependencies]
 actix-rt = "2.9.0"
