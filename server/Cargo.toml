@@ -7,12 +7,15 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4"
+actix-web-validator = "5.0.1"
+validator = "0.17.0"
 background-jobs-actix = "0.18.0"
 background-jobs-core = "0.18.0"
 dotenv = "0.15.0"
 serde = { version = "1.0.197", features = ["derive"] }
 chrono = { version = "0.4.35", features = ["serde"]}
 cafard = { path = "../sdk" }
+lazy_static = "1.4.0"
 
 [dev-dependencies]
 actix-rt = "2.9.0"
