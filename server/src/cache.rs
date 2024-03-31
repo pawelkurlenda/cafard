@@ -5,7 +5,7 @@ use chrono::{DateTime, Utc};
 #[derive(Clone, Debug)]
 pub struct CacheItem {
     value: String,
-    expire_datetime: chrono::DateTime<chrono::Utc>,
+    expire_datetime: DateTime<Utc>,
 }
 
 #[derive(Debug)]
@@ -23,7 +23,7 @@ impl Cache {
     }
 
     // Function to add items to the cache
-    pub fn set(&self, key: String, value: String, expire_datetime: chrono::DateTime<chrono::Utc>) {
+    pub fn set(&self, key: String, value: String, expire_datetime: DateTime<Utc>) {
         let mut items = self.items.lock().unwrap();
         items.insert(
             key,

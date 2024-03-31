@@ -1,5 +1,6 @@
 use super::state::{AppState, CacheState};
 use actix_web::{HttpResponse, web};
+use validator::Validate;
 use crate::models::NewCache;
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
@@ -24,9 +25,14 @@ pub async fn cache_get_handler(params: web::Path<(String)>, cache_state: web::Da
 
 pub async fn cache_put_handler(params: web::Path<(String)>, new_cache: web::Json<NewCache>, cache_state: web::Data<CacheState>) -> HttpResponse {
     let cache_key = params.to_string();
-    cache_state.cache.set(cache_key, new_cache.0.value, new_cache.0.expiration_datetime);
-
-    HttpResponse::Ok().finish()
+    let is_valid = new_cache.validate();
+    match is_valid {
+        Ok(_) => {
+            cache_state.cache.set(cache_key, new_cache.0.value, new_cache.0.expiration_datetime);
+            HttpResponse::Ok().finish()
+        }
+        Err(err) => HttpResponse::BadRequest().json(err)
+    }
 }
 
 pub async fn cache_delete_handler(params: web::Path<(String)>, cache_state: web::Data<CacheState>) -> HttpResponse {
