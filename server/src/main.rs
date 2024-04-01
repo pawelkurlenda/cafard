@@ -2,18 +2,18 @@ mod state;
 mod routes;
 mod models;
 mod handlers;
-mod cache;
 mod background_job;
 
 use dotenv::dotenv;
 use std::env;
-use std::io;
-use std::sync::{Arc, Mutex};
-use std::time::Duration;
+//use std::io;
+//use std::sync::{Arc, Mutex};
+use std::sync::Mutex;
+//use std::time::Duration;
 use actix_web::{App, HttpServer, web};
-use background_jobs_actix::{ActixTimer, WorkerConfig};
-use crate::background_job::{DEFAULT_QUEUE, MyJob};
-use crate::cache::Cache;
+//use background_jobs_actix::{ActixTimer, WorkerConfig};
+//use crate::background_job::{DEFAULT_QUEUE, MyJob};
+use cafard::cache::Cache;
 use crate::routes::{cache_routes, general_routes};
 use crate::state::{AppState, CacheState};
 
