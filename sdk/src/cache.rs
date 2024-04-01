@@ -36,8 +36,8 @@ impl Cache {
 
     // Function to retrieve items from the cache
     pub fn get(&self, key: &str) -> Option<String>
-        //where
-        //    T: Clone,
+    //where
+    //    T: Clone,
     {
         let mut items = self.items.lock().unwrap();
         if let Some(item) = items.get(key) {
