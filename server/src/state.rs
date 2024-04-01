@@ -1,5 +1,6 @@
 use std::sync::{Arc, Mutex};
-//use cafard::
+
+use cafard::cache::Cache;
 
 pub struct AppState {
     pub health_check_response: String,

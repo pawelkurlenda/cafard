@@ -12,3 +12,7 @@ cafard = { path = "../sdk" }
 [dev-dependencies]
 assert_cmd = "2.0.14"
 predicates = "3.1.0"
+
+[[bin]]
+name = "cafard-cli"
+path = "src/main.rs"

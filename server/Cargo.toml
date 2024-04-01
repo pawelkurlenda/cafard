@@ -18,3 +18,7 @@ cafard = { path = "../sdk" }
 
 [dev-dependencies]
 actix-rt = "2.9.0"
+
+[[bin]]
+name = "cafard-server"
+path = "src/main.rs"
