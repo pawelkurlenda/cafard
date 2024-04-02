@@ -23,6 +23,7 @@ pub struct MyJob {
 }*/
 
 impl MyJob {
+    #[allow(dead_code)]
     pub fn new() -> Self {
         MyJob {
         }
@@ -65,6 +66,7 @@ impl Job for MyJob {
     // Defaults to 5 seconds
     const HEARTBEAT_INTERVAL: u64 = 5_000;
 
+    #[allow(unused_variables)]
     fn run(self, state: web::Data<CacheState>) -> Self::Future {
         //println!("state : {:?}", state);
         //println!("self : {:?}", self);
