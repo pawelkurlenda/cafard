@@ -13,16 +13,13 @@ pub struct Cache {
     items: Mutex<HashMap<String, CacheItem>>,
 }
 
-// Implementation of the Cache
 impl Cache {
-    // Constructor for the Cache
     pub fn new() -> Arc<Self> {
         Arc::new(Cache {
             items: Mutex::new(HashMap::new()),
         })
     }
 
-    // Function to add items to the cache
     pub fn set(&self, key: String, value: String, expire_datetime: DateTime<Utc>) {
         let mut items = self.items.lock().unwrap();
         items.insert(
@@ -34,10 +31,7 @@ impl Cache {
         );
     }
 
-    // Function to retrieve items from the cache
     pub fn get(&self, key: &str) -> Option<String>
-    //where
-    //    T: Clone,
     {
         let mut items = self.items.lock().unwrap();
         if let Some(item) = items.get(key) {
@@ -58,9 +52,3 @@ impl Cache {
         items.remove(key);
     }
 }
-
-/*pub struct CacheModel {
-    key: String,
-    value: String,
-    pub expiration_datetime: chrono::DateTime<chrono::Utc>
-}*/
