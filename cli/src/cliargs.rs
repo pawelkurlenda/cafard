@@ -1,17 +1,20 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
 pub(crate) struct CliArgs {
-    #[arg(required = true)]
+    #[command(subcommand)]
     pub operation: CliOperation
 }
 
-#[derive(Subcommand, Debug)]
-pub enum CliOperation {
+#[derive(Subcommand, Debug, Clone)]
+pub(crate) enum CliOperation {
+
     Set {
         key: String,
         value: String
     },
+
     Get {
         key: String
     }
