@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 actix-web = "4"
 actix-web-validator = "5.0.1"
+actix-settings = "0.7.1"
 validator = { version = "0.18.0", features = ["derive"] }
 background-jobs-actix = "0.18.0"
 background-jobs-core = "0.18.0"
