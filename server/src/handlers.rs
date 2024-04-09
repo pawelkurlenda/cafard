@@ -1,4 +1,4 @@
-use super::state::{AppState, CacheState};
+use super::state::{AppState, CacheState, LockState};
 use actix_web::{HttpResponse, Responder, web};
 use validator::Validate;
 use crate::models::NewCache;
@@ -39,6 +39,20 @@ pub async fn cache_put_handler(params: web::Path<String>, new_cache: web::Json<N
 pub async fn cache_delete_handler(params: web::Path<String>, cache_state: web::Data<CacheState>) -> impl Responder {
     let cache_key = params.to_string();
     cache_state.cache.delete(&cache_key);
+
+    HttpResponse::Ok().finish()
+}
+
+pub async fn lock(params: web::Path<String>, cache_state: web::Data<LockState>) -> impl Responder {
+    let lock_key = params.to_string();
+    // cache_state.cache.delete(&cache_key);
+
+    HttpResponse::Ok().finish()
+}
+
+pub async fn unlock(params: web::Path<String>, cache_state: web::Data<LockState>) -> impl Responder {
+    let lock_key = params.to_string();
+    // cache_state.cache.delete(&cache_key);
 
     HttpResponse::Ok().finish()
 }
