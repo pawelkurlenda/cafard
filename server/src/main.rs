@@ -14,8 +14,9 @@ use actix_web::{App, HttpServer, web};
 //use background_jobs_actix::{ActixTimer, WorkerConfig};
 //use crate::background_job::{DEFAULT_QUEUE, MyJob};
 use cafard::cache::Cache;
-use crate::routes::{cache_routes, general_routes};
-use crate::state::{AppState, CacheState};
+use cafard::lock::Lock;
+use crate::routes::{cache_routes, general_routes, lock_routes};
+use crate::state::{AppState, CacheState, LockState};
 
 //const DEFAULT_QUEUE: &'static str = "default";
 
@@ -34,6 +35,11 @@ async fn main() -> std::io::Result<()> {
         cache: Cache::new()
     });
 
+    // Create an instance of your cache
+    let lock_shared_data = web::Data::new(LockState {
+        lock: Lock::new()
+    });
+
     //use background_jobs_core::memory_storage::Storage;
     //let storage = Storage::new(ActixTimer);
 
@@ -50,8 +56,10 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(shared_data.clone())
             .app_data(cache_shared_data.clone())
+            .app_data(cache_shared_data.clone())
             .configure(general_routes)
             .configure(cache_routes)
+            .configure(lock_routes)
     };
 
     let hostname_port = env::var("SERVER_HOSTNAME_PORT")

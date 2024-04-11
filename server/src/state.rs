@@ -15,5 +15,5 @@ pub struct CacheState {
 
 #[derive(Clone)]
 pub struct LockState {
-    pub cache: Arc<Lock>,
+    pub lock: Arc<Lock>,
 }
