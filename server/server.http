@@ -20,3 +20,12 @@ Content-Type: application/json
 
 ###
 DELETE {{url}}/cache/test_name
+
+###
+POST {{url}}/lock/locked_resource_name/acquire
+
+###
+POST {{url}}/lock/locked_resource_name/release
+
+###
+GET {{url}}/lock/locked_resource_name
