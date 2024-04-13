@@ -56,7 +56,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(shared_data.clone())
             .app_data(cache_shared_data.clone())
-            .app_data(cache_shared_data.clone())
+            .app_data(lock_shared_data.clone())
             .configure(general_routes)
             .configure(cache_routes)
             .configure(lock_routes)
