@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 use std::sync::{Arc, Mutex};
-use crate::cache::Cache;
 
 #[derive(Debug)]
 pub struct Lock {
@@ -17,30 +16,28 @@ impl Lock {
     pub fn try_acquire(&self, lock_key: &str) -> bool {
         let mut items = self.items.lock().unwrap();
 
-        match items.get(&lock_key.into_inner()) {
-            Some(true) => false,
-            _ => {
-                items.insert(lock_key.into_inner());
-                true
-            }
+        if items.contains(lock_key) {
+            false
+        } else {
+            items.insert(lock_key.to_owned());
+            true
         }
     }
 
     pub fn try_release(&self, lock_key: &str) -> bool{
         let mut items = self.items.lock().unwrap();
 
-        match items.get(&lock_key.into_inner()) {
-            Some(true) => {
-                items.insert(lock_key.into_inner());
-                true
-            },
-            _ => false,
+        if items.contains(lock_key) {
+            items.remove(lock_key);
+            true
+        } else {
+            false
         }
     }
 
     pub fn is_acquire(&self, lock_key: &str) -> bool {
-        let mut items = self.items.lock().unwrap();
+        let items = self.items.lock().unwrap();
 
-        items.get(&lock_key.into_inner())
+        items.contains(lock_key)
     }
 }
