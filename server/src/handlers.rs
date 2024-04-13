@@ -45,21 +45,21 @@ pub async fn cache_delete_handler(params: web::Path<String>, cache_state: web::D
 
 pub async fn lock_acquire(params: web::Path<String>, lock_state: web::Data<LockState>) -> impl Responder {
     let lock_key = params.to_string();
-    let result = lock_state.lock.try_acquire(&lock_key);
+    let is_acquired = lock_state.lock.try_acquire(&lock_key);
 
-    HttpResponse::Ok().finish()
+    HttpResponse::Ok().json(is_acquired)
 }
 
 pub async fn lock_release(params: web::Path<String>, lock_state: web::Data<LockState>) -> impl Responder {
     let lock_key = params.to_string();
-    let result = lock_state.lock.try_release(&lock_key);
+    let is_released = lock_state.lock.try_release(&lock_key);
 
-    HttpResponse::Ok().finish()
+    HttpResponse::Ok().json(is_released)
 }
 
 pub async fn lock_status(params: web::Path<String>, lock_state: web::Data<LockState>) -> impl Responder {
     let lock_key = params.to_string();
-    let result = lock_state.lock.is_acquire(&lock_key);
+    let is_acquire = lock_state.lock.is_acquire(&lock_key);
 
-    HttpResponse::Ok().finish()
+    HttpResponse::Ok().json(is_acquire)
 }
