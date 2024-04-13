@@ -14,7 +14,7 @@ impl Lock {
         })
     }
 
-    pub fn acquire(&self, lock_key: &str) -> bool {
+    pub fn try_acquire(&self, lock_key: &str) -> bool {
         let mut items = self.items.lock().unwrap();
 
         match items.get(&lock_key.into_inner()) {
@@ -26,7 +26,7 @@ impl Lock {
         }
     }
 
-    pub fn release(&self, lock_key: &str) -> bool{
+    pub fn try_release(&self, lock_key: &str) -> bool{
         let mut items = self.items.lock().unwrap();
 
         match items.get(&lock_key.into_inner()) {
@@ -38,7 +38,7 @@ impl Lock {
         }
     }
 
-    pub fn get_status(&self, lock_key: &str) -> bool {
+    pub fn is_acquire(&self, lock_key: &str) -> bool {
         let mut items = self.items.lock().unwrap();
 
         items.get(&lock_key.into_inner())
