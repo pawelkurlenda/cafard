@@ -1,0 +1,7 @@
+name: docker_release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
