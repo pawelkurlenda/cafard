@@ -4,6 +4,8 @@ COPY . /build
 RUN cargo build --bin cafard --release
 RUN cargo build --bin cafard-server --release
 
+FROM gcr.io/distroless/cc
+COPY configs ./configs
 COPY --from=builder /build/target/release/cafard .
 COPY --from=builder /build/target/release/cafard-server .
 
