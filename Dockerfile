@@ -31,7 +31,7 @@ FROM debian:buster-slim
 #RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # Copy the build artifact from the build stage
-COPY --from=builder /usr/src/cafard/server/target/release/server /usr/local/bin/server
+COPY --from=builder /usr/src/cafard/server/target/release /usr/local/bin/server
 
 # Set the startup command to run your binary
-CMD ["server"]
+CMD ["cafard"]
