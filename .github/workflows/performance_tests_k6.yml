@@ -1,4 +1,4 @@
-name: Performance Testing
+name: Performance Testing with K6
 
 #on:
 #  push:
@@ -11,6 +11,9 @@ name: Performance Testing
 jobs:
   performance_test:
     runs-on: ubuntu-latest
+
+    container:
+      image: loadimpact/k6:latest
 
     steps:
       - uses: actions/checkout@v2
@@ -33,8 +36,6 @@ jobs:
           nohup target/release/your_app &
           sleep 10  # Give it some time to start up
 
-      # Install wrk and perform load testing
+      # Run k6 load test
       - name: Load Test
-        run: |
-          sudo apt-get install -y wrk
-          wrk -t12 -c400 -d60s http://localhost:8080 --rate 1000
+        run: k6 run /github/workspace/load_test.js
