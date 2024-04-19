@@ -5,7 +5,7 @@ use chrono::{DateTime, Utc};
 #[derive(Clone, Debug)]
 pub struct CacheItem {
     value: String,
-    expire_datetime: DateTime<Utc>,
+    expire_datetime: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug)]
@@ -20,7 +20,7 @@ impl Cache {
         })
     }
 
-    pub fn set(&self, key: String, value: String, expire_datetime: DateTime<Utc>) {
+    pub fn set(&self, key: String, value: String, expire_datetime: Option<DateTime<Utc>>) {
         let mut items = self.items.lock().unwrap();
         items.insert(
             key,
@@ -35,7 +35,7 @@ impl Cache {
     {
         let mut items = self.items.lock().unwrap();
         if let Some(item) = items.get(key) {
-            if item.expire_datetime > Utc::now() {
+            if item.expire_datetime > Some(Utc::now()) {
                 Some(item.value.clone())
             } else {
                 // If the item is expired, remove it from the cache
@@ -65,7 +65,7 @@ mod tests {
         let cache = Cache::new();
         let key = "test_key".to_string();
         let value = "test_value".to_string();
-        let expire_time = Utc::now() + Duration::seconds(60);
+        let expire_time = Some(Utc::now() + Duration::seconds(60));
 
         cache.set(key.clone(), value.clone(), expire_time);
 
@@ -77,7 +77,7 @@ mod tests {
         let cache = Cache::new();
         let key = "expired_key".to_string();
         let value = "expired_value".to_string();
-        let expire_time = Utc::now() - Duration::seconds(1);  // Past expiration
+        let expire_time = Some(Utc::now() - Duration::seconds(1));  // Past expiration
 
         cache.set(key.clone(), value.clone(), expire_time);
         thread::sleep(StdDuration::from_secs(2)); // Ensure the time has passed for expiration check
@@ -90,7 +90,7 @@ mod tests {
         let cache = Cache::new();
         let key = "delete_key".to_string();
         let value = "delete_value".to_string();
-        let expire_time = Utc::now() + Duration::seconds(60);
+        let expire_time = Some(Utc::now() + Duration::seconds(60));
 
         cache.set(key.clone(), value.clone(), expire_time);
         assert!(cache.get(&key).is_some());
