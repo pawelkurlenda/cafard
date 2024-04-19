@@ -100,6 +100,18 @@ mod tests {
     }
 
     #[test]
+    fn test_no_expiration() {
+        let cache = Cache::new();
+        let key = "persistent_key".to_string();
+        let value = "persistent_value".to_string();
+
+        cache.set(key.clone(), value.clone(), None); // No expiration time
+
+        thread::sleep(StdDuration::from_secs(2)); // Time passes, but it should not affect the entry
+        assert_eq!(cache.get(&key).unwrap(), value); // The value should still be retrievable
+    }
+
+    #[test]
     fn test_non_existent_key() {
         let cache = Cache::new();
         let key = "non_existent_key";
