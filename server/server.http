@@ -19,6 +19,14 @@ Content-Type: application/json
 }
 
 ###
+PUT {{url}}/cache/test_name
+Content-Type: application/json
+
+{
+  "value": "test value"
+}
+
+###
 DELETE {{url}}/cache/test_name
 
 ###
