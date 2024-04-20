@@ -35,10 +35,9 @@ impl Cache {
     {
         let mut items = self.items.lock().unwrap();
         if let Some(item) = items.get(key) {
-            if item.expire_datetime > Some(Utc::now()) {
+            if item.expire_datetime == None || item.expire_datetime > Some(Utc::now()) {
                 Some(item.value.clone())
             } else {
-                // If the item is expired, remove it from the cache
                 items.remove(key);
                 None
             }
