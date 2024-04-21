@@ -10,3 +10,5 @@ keywords = ["cafard", "cache"]
 
 [dependencies]
 chrono = "0.4.37"
+geo = "0.28.0"
+geojson = "0.24.1"
