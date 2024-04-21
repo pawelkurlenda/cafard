@@ -14,9 +14,10 @@ use actix_web::{App, HttpServer, web};
 //use background_jobs_actix::{ActixTimer, WorkerConfig};
 //use crate::background_job::{DEFAULT_QUEUE, MyJob};
 use cafard::cache::Cache;
+use cafard::geospatial::Geospatial;
 use cafard::lock::Lock;
-use crate::routes::{cache_routes, general_routes, lock_routes};
-use crate::state::{AppState, CacheState, LockState};
+use crate::routes::{cache_routes, general_routes, geospatial_routes, lock_routes};
+use crate::state::{AppState, CacheState, GeospatialState, LockState};
 
 //const DEFAULT_QUEUE: &'static str = "default";
 
@@ -30,14 +31,16 @@ async fn main() -> std::io::Result<()> {
         visit_count: Mutex::new(0),
     });
 
-    // Create an instance of your cache
     let cache_shared_data = web::Data::new(CacheState {
         cache: Cache::new()
     });
 
-    // Create an instance of your cache
     let lock_shared_data = web::Data::new(LockState {
         lock: Lock::new()
+    });
+
+    let geospatial_shared_data = web::Data::new(GeospatialState {
+        lock: Geospatial::new()
     });
 
     //use background_jobs_core::memory_storage::Storage;
@@ -57,9 +60,11 @@ async fn main() -> std::io::Result<()> {
             .app_data(shared_data.clone())
             .app_data(cache_shared_data.clone())
             .app_data(lock_shared_data.clone())
+            .app_data(geospatial_shared_data.clone())
             .configure(general_routes)
             .configure(cache_routes)
             .configure(lock_routes)
+            .configure(geospatial_routes)
     };
 
     let hostname_port = env::var("SERVER_HOSTNAME_PORT")

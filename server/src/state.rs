@@ -1,6 +1,7 @@
 use std::sync::{Arc, Mutex};
 
 use cafard::cache::Cache;
+use cafard::geospatial::Geospatial;
 use cafard::lock::Lock;
 
 pub struct AppState {
@@ -16,4 +17,9 @@ pub struct CacheState {
 #[derive(Clone)]
 pub struct LockState {
     pub lock: Arc<Lock>,
+}
+
+#[derive(Clone)]
+pub struct GeospatialState {
+    pub lock: Arc<Geospatial>,
 }

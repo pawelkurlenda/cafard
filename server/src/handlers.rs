@@ -63,3 +63,7 @@ pub async fn lock_status(params: web::Path<String>, lock_state: web::Data<LockSt
 
     HttpResponse::Ok().json(is_acquire)
 }
+
+pub async fn add_location() -> impl Responder {
+    HttpResponse::Ok().finish()
+}
