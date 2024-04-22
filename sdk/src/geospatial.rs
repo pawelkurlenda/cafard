@@ -30,9 +30,11 @@ impl Geospatial {
     pub fn get_nearby_locations(&self, point: Point, radius_in_meters: i32) {
         let mut items = self.items.lock().unwrap();
 
+        let radius = radius_in_meters as f64 * 1000.0;
+
         let nearby_locations: Vec<(String, Point<f64>)> = items
             .iter()
-            .filter(|(_, point)| point.haversine_distance(point) <= radius_in_meters * 1000.0)
+            .filter(|(_, point)| point.haversine_distance(point) <= radius)
             .map(|(name, point)| (name.clone(), *point))
             .collect();
 
