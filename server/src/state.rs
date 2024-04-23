@@ -21,5 +21,5 @@ pub struct LockState {
 
 #[derive(Clone)]
 pub struct GeospatialState {
-    pub lock: Arc<Geospatial>,
+    pub locations: Arc<Geospatial>,
 }

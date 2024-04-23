@@ -1,5 +1,5 @@
 use actix_web::web;
-use crate::handlers::{cache_delete_handler, cache_get_handler, cache_keys_get_handler, cache_put_handler, health_check_handler, location_put_handler, lock_acquire_handler, lock_release_handler, lock_status_handler};
+use crate::handlers::{cache_delete_handler, cache_get_handler, cache_keys_get_handler, cache_put_handler, health_check_handler, location_get_by_id_handler, location_put_handler, lock_acquire_handler, lock_release_handler, lock_status_handler};
 
 pub fn general_routes(cfg: &mut web::ServiceConfig) {
     cfg.route("/health", web::get().to(health_check_handler));
@@ -27,6 +27,6 @@ pub fn lock_routes(cfg: &mut web::ServiceConfig) {
 pub fn geospatial_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/geospatial")
-            .route("/locations", web::post().to(location_put_handler()))
+            .route("/locations/{location_id}", web::get().to(location_get_by_id_handler))
     );
 }
