@@ -3,6 +3,12 @@ use serde::{Deserialize, Serialize};
 use validator::{Validate, ValidationError};
 
 #[derive(Deserialize, Serialize, Validate, Debug, Clone)]
+pub struct NewLocation {
+    pub longitude: f64,
+    pub latitude: f64
+}
+
+#[derive(Deserialize, Serialize, Validate, Debug, Clone)]
 pub struct NewCache {
     pub value: String,
 

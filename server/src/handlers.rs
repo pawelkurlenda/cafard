@@ -1,7 +1,7 @@
 use super::state::{AppState, CacheState, GeospatialState, LockState};
 use actix_web::{HttpResponse, Responder, web};
 use validator::Validate;
-use crate::models::NewCache;
+use crate::models::{NewCache, NewLocation};
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> impl Responder {
     let mut visit_count = app_state.visit_count.lock().unwrap();
@@ -64,8 +64,19 @@ pub async fn lock_status_handler(params: web::Path<String>, lock_state: web::Dat
     HttpResponse::Ok().json(is_acquire)
 }
 
-pub async fn location_put_handler(params: web::Path<String>, new_cache: web::Json<NewCache>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
-    HttpResponse::Ok().finish()
+pub async fn location_put_handler(params: web::Path<String>, new_location: web::Json<NewLocation>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
+    let location_key = params.to_string();
+
+    let point = Point
+    geospatial_state.locations.upsert_location(location_key, )
+    //let is_valid = new_cache.validate();
+    /*match is_valid {
+        Ok(_) => {
+            cache_state.cache.set(cache_key, new_cache.0.value, new_cache.0.expiration_datetime);
+            HttpResponse::Ok().finish()
+        }
+        Err(err) => HttpResponse::BadRequest().json(err)
+    }*/
 }
 
 pub async fn location_get_by_id_handler(params: web::Path<String>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
