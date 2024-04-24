@@ -28,5 +28,6 @@ pub fn geospatial_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/geospatial")
             .route("/locations/{location_id}", web::get().to(location_get_by_id_handler))
+            .route("/locations/{location_id}", web::put().to(location_put_handler))
     );
 }
