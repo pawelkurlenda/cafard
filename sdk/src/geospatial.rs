@@ -14,7 +14,9 @@ impl Geospatial {
         })
     }
 
-    pub fn upsert_location(&self, key: String, point: Point<f64>) {
+    pub fn upsert_location(&self, key: String, longitude: f64, latitude: f64) {
+        let point =  Point::new(longitude, latitude);
+
         let mut items = self.items.lock().unwrap();
 
         items.insert(key, point);
