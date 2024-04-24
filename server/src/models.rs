@@ -4,7 +4,10 @@ use validator::{Validate, ValidationError};
 
 #[derive(Deserialize, Serialize, Validate, Debug, Clone)]
 pub struct NewLocation {
+    #[validate(range(min = -180.0, max = 180.0))]
     pub longitude: f64,
+
+    #[validate(range(min = -90.0, max = 90.0))]
     pub latitude: f64
 }
 
