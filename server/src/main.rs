@@ -40,7 +40,7 @@ async fn main() -> std::io::Result<()> {
     });
 
     let geospatial_shared_data = web::Data::new(GeospatialState {
-        lock: Geospatial::new()
+        locations: Geospatial::new()
     });
 
     //use background_jobs_core::memory_storage::Storage;
