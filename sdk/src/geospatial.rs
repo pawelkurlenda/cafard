@@ -22,7 +22,7 @@ impl Geospatial {
         items.insert(key, point);
     }
 
-    pub fn get_nearby_locations(&self, central_point: &Point, radius_in_meters: i32) -> Vec<(String, Point<f64>)> {
+    pub fn get_nearby_locations(&self, central_point: &Point, radius_in_meters: i32) -> Vec<(String, Point<f64>)> {// TODO: consider change type to  Vec<(String, (f64, f64))>
         let mut items = self.items.lock().unwrap();
 
         let radius = radius_in_meters as f64 * 1000.0;
