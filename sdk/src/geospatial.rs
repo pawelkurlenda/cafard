@@ -7,6 +7,16 @@ pub struct Geospatial {
     items: Mutex<HashMap<String, Point<f64>>>,
 }
 
+pub trait Validation {
+    fn valid();
+}
+
+impl Validation for Point {
+    fn valid() {
+        todo!()
+    }
+}
+
 impl Geospatial {
     pub fn new() -> Arc<Self> {
         Arc::new(Geospatial {
@@ -16,6 +26,10 @@ impl Geospatial {
 
     // TODO: upsert_location_2 vs upsert_location
     pub fn upsert_location_2(&self, key: String, point: Point) {
+        point.valid();
+
+        Point::valid()
+
         let mut items = self.items.lock().unwrap();
 
         items.insert(key, point);
