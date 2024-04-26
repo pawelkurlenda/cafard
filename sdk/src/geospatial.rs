@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use geo::{HaversineDistance, Point};
+use crate::validatable::Validatable;
 
 #[derive(Debug)]
 pub struct Geospatial {
@@ -13,6 +14,16 @@ pub trait Validation {
 
 impl Validation for Point {
     fn valid() {
+        todo!()
+    }
+}
+
+impl Validatable<GeospatialError> for Point {
+    fn validate(&self) -> Result<(), GeospatialError> {
+        todo!()
+    }
+
+    fn valid_or_create() -> Result<Point, GeospatialError> {
         todo!()
     }
 }
