@@ -2,7 +2,9 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum CafardError {
+    #[error("Error")]
     ErrorType1 = 1,
+    #[error("Error")]
     ErrorType = 2
 }
 
