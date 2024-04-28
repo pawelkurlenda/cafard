@@ -24,7 +24,7 @@ impl Validatable<GeospatialError> for Point {
         todo!()
     }
 
-    fn valid_or_create() -> Result<Point, GeospatialError> {
+    fn try_create() -> Result<Point, GeospatialError> {
         todo!()
     }
 }
@@ -40,7 +40,10 @@ impl Geospatial {
     pub fn upsert_location_2(&self, key: String, point: Point) {
         point.valid();
 
-        Point::valid()
+        //let a_1 = Point::valid();
+        let b = point.validate();
+        let a_2 = Point::try_create();
+        let a_3 = Point::valid();
 
         let mut items = self.items.lock().unwrap();
 
