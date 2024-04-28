@@ -19,13 +19,26 @@ impl Validation for Point {
     }
 }
 
+pub trait Validatable<E> {
+    fn validate(&self) -> Result<(), E>;
+    fn try_create(longitude: f64, latitude: f64) -> Result<Point, E>;
+}
+
 impl Validatable<GeospatialError> for Point {
     fn validate(&self) -> Result<(), GeospatialError> {
         todo!()
     }
 
-    fn try_create() -> Result<Point, GeospatialError> {
-        todo!()
+    fn try_create(longitude: f64, latitude: f64) -> Result<Point, GeospatialError> {
+        if longitude > 180.0 || longitude < -180.0 {
+            return Err(GeospatialError::LongitudeOutOfRange)
+        }
+
+        if latitude > 90.0 || latitude < -90.0 {
+            return Err(GeospatialError::LatitudeOutOfRange)
+        }
+
+        Ok(Point::new(longitude, latitude))
     }
 }
 
