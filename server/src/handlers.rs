@@ -67,9 +67,12 @@ pub async fn lock_status_handler(params: web::Path<String>, lock_state: web::Dat
 pub async fn location_put_handler(params: web::Path<String>, new_location: web::Json<NewLocation>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
     let location_key = params.to_string();
 
-    geospatial_state.locations.upsert_location(location_key, new_location.longitude, new_location.longitude);
+    let upsert_result = geospatial_state.locations.upsert_location(location_key, new_location.longitude, new_location.longitude);
 
-    HttpResponse::Ok().finish()
+    match upsert_result {
+        Ok(_) => HttpResponse::Ok().finish(),
+        Err(err) => HttpResponse::BadRequest().json(err)
+    }
 }
 
 pub async fn location_get_by_id_handler(params: web::Path<String>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
