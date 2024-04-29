@@ -3,6 +3,7 @@ mod routes;
 mod models;
 mod handlers_a;
 mod background_job;
+mod handlers;
 
 use dotenv::dotenv;
 use std::env;

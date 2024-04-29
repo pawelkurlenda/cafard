@@ -1,7 +1,5 @@
-use super::state::{AppState, CacheState, GeospatialState, LockState};
 use actix_web::{HttpResponse, Responder, web};
-use validator::Validate;
-use crate::models::{NewCache, NewLocation};
+use crate::state::AppState;
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> impl Responder {
     let mut visit_count = app_state.visit_count.lock().unwrap();
