@@ -1,7 +1,6 @@
 mod state;
 mod routes;
 mod models;
-mod handlers_a;
 mod background_job;
 mod handlers;
 
