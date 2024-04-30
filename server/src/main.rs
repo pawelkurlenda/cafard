@@ -1,8 +1,8 @@
 mod state;
 mod routes;
-mod models;
 mod background_job;
 mod handlers;
+mod models;
 
 use dotenv::dotenv;
 use std::env;

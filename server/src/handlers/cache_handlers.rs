@@ -1,6 +1,6 @@
 use actix_web::{HttpResponse, Responder, web};
 use validator::Validate;
-use crate::models::CacheRequest;
+use crate::models::request_models::CacheRequest;
 use crate::state::CacheState;
 
 #[allow(unused_variables)]
