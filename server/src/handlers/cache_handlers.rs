@@ -1,6 +1,6 @@
 use actix_web::{HttpResponse, Responder, web};
 use validator::Validate;
-use crate::models::NewCache;
+use crate::models::CacheRequest;
 use crate::state::CacheState;
 
 #[allow(unused_variables)]
@@ -16,7 +16,7 @@ pub async fn cache_get_handler(params: web::Path<String>, cache_state: web::Data
     HttpResponse::Ok().json(cache_value)
 }
 
-pub async fn cache_put_handler(params: web::Path<String>, new_cache: web::Json<NewCache>, cache_state: web::Data<CacheState>) -> impl Responder {
+pub async fn cache_put_handler(params: web::Path<String>, new_cache: web::Json<CacheRequest>, cache_state: web::Data<CacheState>) -> impl Responder {
     let cache_key = params.to_string();
     let is_valid = new_cache.validate();
     match is_valid {

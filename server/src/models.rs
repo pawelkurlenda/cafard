@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use validator::{Validate, ValidationError};
 
 #[derive(Deserialize, Serialize, Validate, Debug, Clone)]
-pub struct NewLocation {
+pub struct LocationRequest {
     #[validate(range(min = -180.0, max = 180.0))]
     pub longitude: f64,
 
@@ -12,7 +12,7 @@ pub struct NewLocation {
 }
 
 #[derive(Deserialize, Serialize, Validate, Debug, Clone)]
-pub struct NewCache {
+pub struct CacheRequest {
     pub value: String,
 
     #[validate(custom(function = "validate_expiration_datetime"))]

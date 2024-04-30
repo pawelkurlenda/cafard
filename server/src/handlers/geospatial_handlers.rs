@@ -1,8 +1,8 @@
 use actix_web::{HttpResponse, Responder, web};
-use crate::models::NewLocation;
+use crate::models::LocationRequest;
 use crate::state::GeospatialState;
 
-pub async fn location_put_handler(params: web::Path<String>, new_location: web::Json<NewLocation>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
+pub async fn location_put_handler(params: web::Path<String>, new_location: web::Json<LocationRequest>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
     let location_key = params.to_string();
 
     let upsert_result = geospatial_state.locations.upsert_location(location_key, new_location.longitude, new_location.longitude);
