@@ -3,6 +3,11 @@ use serde::{Deserialize, Serialize};
 use validator::{Validate, ValidationError};
 
 #[derive(Deserialize, Serialize, Validate, Debug, Clone)]
+pub struct GetNearbyLocationRequest {
+    pub location: LocationRequest,
+    pub radius: i32
+}
+#[derive(Deserialize, Serialize, Validate, Debug, Clone)]
 pub struct LocationRequest {
     #[validate(range(min = -180.0, max = 180.0))]
     pub longitude: f64,

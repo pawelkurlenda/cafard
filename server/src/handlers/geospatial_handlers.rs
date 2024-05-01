@@ -1,5 +1,5 @@
 use actix_web::{HttpResponse, Responder, web};
-use crate::models::request_models::LocationRequest;
+use crate::models::request_models::{GetNearbyLocationRequest, LocationRequest};
 use crate::state::GeospatialState;
 
 pub async fn location_put_handler(params: web::Path<String>, new_location: web::Json<LocationRequest>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
@@ -26,8 +26,8 @@ pub async fn location_get_by_id_handler(params: web::Path<String>, geospatial_st
     }
 }
 
-pub async fn location_get_nearby_handler(location_request: web::Json<LocationRequest>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
-    let upsert_result = geospatial_state.locations.get_nearby_locations(location_key, new_location.longitude, new_location.longitude);
+pub async fn location_get_nearby_handler(location_request: web::Json<GetNearbyLocationRequest>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
+    let upsert_result = geospatial_state.locations.get_nearby_locations(location_request.longitude, location_request.longitude);
 
     HttpResponse::Ok().finish()
 }
