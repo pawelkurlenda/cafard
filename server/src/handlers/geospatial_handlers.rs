@@ -26,6 +26,8 @@ pub async fn location_get_by_id_handler(params: web::Path<String>, geospatial_st
     }
 }
 
-pub async fn location_get_nearby_handler() -> impl Responder {
+pub async fn location_get_nearby_handler(location_request: web::Json<LocationRequest>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
+    let upsert_result = geospatial_state.locations.get_nearby_locations(location_key, new_location.longitude, new_location.longitude);
+
     HttpResponse::Ok().finish()
 }

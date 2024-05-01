@@ -47,7 +47,13 @@ impl Geospatial {
         }
     }
 
-    pub fn get_nearby_locations(&self, central_point: &Point, radius_in_meters: i32) -> Vec<(String, Point<f64>)> {// TODO: consider change type to  Vec<(String, (f64, f64))>
+    pub fn get_nearby_locations(&self, longitude: f64, latitude: f64, radius_in_meters: i32)
+            -> Result<Vec<(String, Point<f64>)>, GeospatialError> {
+        let central_point =  Point::try_create(longitude, latitude);
+        if central_point.is_err() {
+            return Err(central_point.err().unwrap())
+        }
+
         let mut items = self.items.lock().unwrap();
 
         let radius = radius_in_meters as f64 * 1000.0;
