@@ -27,10 +27,16 @@ pub async fn location_get_by_id_handler(params: web::Path<String>, geospatial_st
 }
 
 pub async fn location_get_nearby_handler(location_request: web::Json<GetNearbyLocationRequest>, geospatial_state: web::Data<GeospatialState>) -> impl Responder {
-    let upsert_result = geospatial_state.locations.get_nearby_locations(
+    let location_get_nearby_result = geospatial_state.locations.get_nearby_locations(
         location_request.location.longitude,
         location_request.location.latitude,
         location_request.radius);
 
-    HttpResponse::Ok().finish()
+    match location_get_nearby_result {
+        Ok(result) => {
+            let a = result.into_iter().map()
+            HttpResponse::Ok().finish()
+        },
+        Err(error) => HttpResponse::BadRequest().json(error)
+    }
 }
