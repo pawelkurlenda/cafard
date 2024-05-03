@@ -14,3 +14,4 @@ geo = "0.28.0"
 geojson = "0.24.1"
 thiserror = "1.0.59"
 strum = "0.26.2"
+serde = { version = "1.0.197", features = ["derive"] }

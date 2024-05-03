@@ -1,4 +1,5 @@
 use thiserror::Error;
+use serde::Serialize;
 
 #[derive(Debug, Error)]
 pub enum CafardError {
@@ -8,7 +9,7 @@ pub enum CafardError {
     ErrorType = 2
 }
 
-#[derive(Debug, Error)]
+#[derive(Debug, Error, Serialize)]
 pub enum GeospatialError {
     #[error("Error")]
     Error = 1,
