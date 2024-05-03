@@ -35,15 +35,15 @@ pub async fn location_get_nearby_handler(location_request: web::Json<GetNearbyLo
 
     match location_get_nearby_result {
         Ok(result) => {
-            let a: Vec<GetNearbyLocationResponse> = result.into_iter().map(|x| GetNearbyLocationResponse {
+            let result: Vec<GetNearbyLocationResponse> = result.into_iter().map(|x| GetNearbyLocationResponse {
                 id: x.0,
                 location: LocationResponse {
-                    longitude: x.1.x,
-                    latitude: x.1.y
+                    longitude: x.1.x(),
+                    latitude: x.1.y()
                 }
             }).collect();
 
-            HttpResponse::Ok().finish()
+            HttpResponse::Ok().json(result)
         },
         Err(error) => HttpResponse::BadRequest().json(error)
     }
