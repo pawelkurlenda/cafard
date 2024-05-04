@@ -35,49 +35,6 @@ impl Collection {
     }
 }
 
-
-Here's an example of how you might define the structs and fundamental components in Rust for a simple NoSQL database engine that supports basic SQL-like operations. This example will focus on a document-oriented model, similar to MongoDB but with SQL-like query capabilities.
-
-Struct Definitions
-rust
-Copy code
-use std::collections::HashMap;
-use serde_json::{Value, json};
-use std::sync::{Arc, RwLock};
-
-/// Represents a single document within the database.
-#[derive(Debug, Clone)]
-struct Document {
-    id: u32,
-    data: Value,  // Using serde_json::Value to store arbitrary JSON data
-}
-
-/// A collection of documents.
-#[derive(Debug, Clone)]
-struct Collection {
-    name: String,
-    documents: HashMap<u32, Document>,
-}
-
-impl Collection {
-    fn new(name: &str) -> Self {
-        Collection {
-            name: name.to_string(),
-            documents: HashMap::new(),
-        }
-    }
-
-    /// Insert a new document into the collection.
-    fn insert(&mut self, doc: Document) {
-        self.documents.insert(doc.id, doc);
-    }
-
-    /// Simple SELECT-like operation, searching by ID.
-    fn select_by_id(&self, id: u32) -> Option<&Document> {
-        self.documents.get(&id)
-    }
-}
-
 /// The main database structure.
 #[derive(Debug, Clone)]
 struct Database {
