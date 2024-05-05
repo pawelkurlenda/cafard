@@ -17,7 +17,7 @@ use cafard::cache::Cache;
 use cafard::database::Database;
 use cafard::geospatial::Geospatial;
 use cafard::lock::Lock;
-use crate::routes::{cache_routes, general_routes, geospatial_routes, lock_routes};
+use crate::routes::{cache_routes, database_routes, general_routes, geospatial_routes, lock_routes};
 use crate::state::{AppState, CacheState, DatabaseState, GeospatialState, LockState};
 
 //const DEFAULT_QUEUE: &'static str = "default";
@@ -71,6 +71,7 @@ async fn main() -> std::io::Result<()> {
             .configure(cache_routes)
             .configure(lock_routes)
             .configure(geospatial_routes)
+            .configure(database_routes)
     };
 
     let hostname_port = env::var("SERVER_HOSTNAME_PORT")
