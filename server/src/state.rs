@@ -3,6 +3,7 @@ use std::sync::{Arc, Mutex};
 use cafard::cache::Cache;
 use cafard::geospatial::Geospatial;
 use cafard::lock::Lock;
+use cafard::database::Database;
 
 pub struct AppState {
     pub health_check_response: String,
@@ -22,4 +23,9 @@ pub struct LockState {
 #[derive(Clone)]
 pub struct GeospatialState {
     pub locations: Arc<Geospatial>,
+}
+
+#[derive(Clone)]
+pub struct DatabaseState {
+    pub database_state: Arc<Database>,
 }

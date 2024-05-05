@@ -14,10 +14,11 @@ use actix_web::{App, HttpServer, web};
 //use background_jobs_actix::{ActixTimer, WorkerConfig};
 //use crate::background_job::{DEFAULT_QUEUE, MyJob};
 use cafard::cache::Cache;
+use cafard::database::Database;
 use cafard::geospatial::Geospatial;
 use cafard::lock::Lock;
 use crate::routes::{cache_routes, general_routes, geospatial_routes, lock_routes};
-use crate::state::{AppState, CacheState, GeospatialState, LockState};
+use crate::state::{AppState, CacheState, DatabaseState, GeospatialState, LockState};
 
 //const DEFAULT_QUEUE: &'static str = "default";
 
@@ -43,6 +44,10 @@ async fn main() -> std::io::Result<()> {
         locations: Geospatial::new()
     });
 
+    let database_shared_data = web::Data::new(DatabaseState {
+        database_state: Database::new()
+    });
+
     //use background_jobs_core::memory_storage::Storage;
     //let storage = Storage::new(ActixTimer);
 
@@ -61,6 +66,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(cache_shared_data.clone())
             .app_data(lock_shared_data.clone())
             .app_data(geospatial_shared_data.clone())
+            .app_data(database_shared_data.clone())
             .configure(general_routes)
             .configure(cache_routes)
             .configure(lock_routes)
