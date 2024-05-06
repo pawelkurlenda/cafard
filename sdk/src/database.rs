@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use serde_json::{Value, json};
 use std::sync::{Arc, Mutex, RwLock};
 use crate::geospatial::Geospatial;
@@ -15,6 +15,8 @@ struct Document {
 struct Collection {
     name: String,
     documents: HashMap<u32, Document>,
+    schema: HashMap<String, String>,
+    indexes: HashSet<String>
 }
 
 impl Collection {
