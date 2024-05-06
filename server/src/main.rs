@@ -25,7 +25,6 @@ use crate::state::{AppState, CacheState, DatabaseState, GeospatialState, LockSta
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
-    println!("Hello, world!");
 
     let shared_data = web::Data::new(AppState {
         health_check_response: "OK".to_string(),
@@ -76,8 +75,6 @@ async fn main() -> std::io::Result<()> {
 
     let hostname_port = env::var("SERVER_HOSTNAME_PORT")
         .expect("SERVER_HOSTNAME_PORT is not set in .env file");
-
-    println!("Starting server at: {}", hostname_port);
 
     HttpServer::new(app).bind(hostname_port).unwrap().run().await
 }
