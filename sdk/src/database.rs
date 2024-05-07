@@ -15,8 +15,8 @@ struct Document {
 struct Collection {
     name: String,
     documents: HashMap<u32, Document>,
-    schema: HashMap<String, String>,
-    indexes: HashSet<String>
+    schema: Option<HashMap<String, String>>,
+    indexes: Option<HashSet<String>>
 }
 
 impl Collection {
@@ -24,6 +24,8 @@ impl Collection {
         Collection {
             name: name.to_string(),
             documents: HashMap::new(),
+            schema: None,
+            indexes: None
         }
     }
 
