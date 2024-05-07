@@ -38,6 +38,14 @@ impl Collection {
     fn select_by_id(&self, id: u32) -> Option<&Document> {
         self.documents.get(&id)
     }
+
+    fn create_index(&self) -> bool {
+        // todo : implement
+    }
+
+    fn drop_index_by_name(&self) -> bool {
+        // todo : implement
+    }
 }
 
 /// The main database structure.
