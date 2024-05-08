@@ -26,11 +26,11 @@ impl Collection {
         }
     }
 
-    fn insert(&mut self, doc: Document) {
+    fn insert_document(&mut self, doc: Document) {
         self.documents.insert(doc.id, doc);
     }
 
-    fn select_by_id(&self, id: u32) -> Option<&Document> {
+    fn select_document_by_id(&self, id: u32) -> Option<&Document> {
         self.documents.get(&id)
     }
 
