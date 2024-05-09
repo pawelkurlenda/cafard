@@ -12,6 +12,7 @@ struct Document {
 struct Collection {
     name: String,
     documents: HashMap<u32, Document>,
+    file_path: String,
     schema: Option<HashMap<String, String>>,
     indexes: Option<HashSet<String>>
 }
@@ -20,6 +21,7 @@ impl Collection {
     fn new(name: &str) -> Self {
         Collection {
             name: name.to_string(),
+            file_path: name.to_string(),
             documents: HashMap::new(),
             schema: None,
             indexes: None
