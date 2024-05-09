@@ -36,12 +36,17 @@ impl Collection {
         self.documents.get(&id)
     }
 
-    fn create_index(&self) -> bool {
+    fn create_index_1(&self, index_name: &str) -> bool {
         // todo : implement
         false
     }
 
-    fn drop_index_by_name(&self) -> bool {
+    fn create_index_2(&self, index_name: HashSet<String>) -> bool {
+        // todo : implement
+        false
+    }
+
+    fn drop_index_by_name(&self, index_name: &str) -> bool {
         // todo : implement
         false
     }
