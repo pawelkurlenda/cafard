@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
 use serde_json::Value;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 
 #[derive(Debug, Clone)]
 struct Document {
@@ -38,22 +38,24 @@ impl Collection {
 
     fn create_index(&self) -> bool {
         // todo : implement
+        false
     }
 
     fn drop_index_by_name(&self) -> bool {
         // todo : implement
+        false
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Database {
-    collections: HashMap<String, Collection>,
+    collections: Mutex<HashMap<String, Collection>>,
 }
 
 impl Database {
     pub fn new() -> Arc<Self> {
         Arc::new(Database {
-            collections: HashMap::new(),
+            collections: Mutex::new(HashMap::new()),
         })
     }
 
