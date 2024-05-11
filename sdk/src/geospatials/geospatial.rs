@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use geo::{HaversineDistance, Point};
-use crate::error::GeospatialError;
+use crate::geospatials::error::GeospatialError;
 
 #[derive(Debug)]
 pub struct Geospatial {
