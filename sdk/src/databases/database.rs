@@ -36,13 +36,14 @@ impl Collection {
         self.documents.get(&id)
     }
 
-    fn create_index_1(&self, index_name: &str) -> bool {
+    fn create_index_1(&self, index_name: &str, is_unique: bool) -> bool {
         // todo : implement
         false
     }
 
-    fn create_index_2(&self, index_name: HashSet<String>) -> bool {
+    fn create_index_2(&self, index_name: HashSet<String>, is_unique: bool) -> bool {
         // todo : implement
+
         false
     }
 
