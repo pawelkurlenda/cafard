@@ -2,6 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::io::Error;
 use serde_json::Value;
 use std::sync::{Arc, Mutex};
+use crate::databases::error::DatabaseError;
 
 #[derive(Debug, Clone)]
 struct Document {
@@ -37,19 +38,19 @@ impl Collection {
         self.documents.get(&id)
     }
 
-    fn create_index_1(&self, index_name: &str, is_unique: bool) -> Result<String, Error> {
+    fn create_index_1(&self, index_name: &str, is_unique: bool) -> Result<String, DatabaseError> {
         // todo : implement
         Ok("true".to_string())
     }
 
-    fn create_index_2(&self, index_name: HashSet<String>, is_unique: bool) -> Result<String, Error> {
+    fn create_index_2(&self, index_name: HashSet<String>, is_unique: bool) -> Result<String, DatabaseError> {
         // todo : implement
         Ok("true".to_string())
     }
 
-    fn drop_index_by_name(&self, index_name: &str) -> bool {
+    fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
         // todo : implement
-        false
+        Ok(())
     }
 }
 
