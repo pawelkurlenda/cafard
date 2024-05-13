@@ -3,6 +3,7 @@ use std::io::Error;
 use serde_json::Value;
 use std::sync::{Arc, Mutex};
 use crate::databases::error::DatabaseError;
+use crate::databases::error::DatabaseError::Error;
 
 #[derive(Debug, Clone)]
 struct Document {
@@ -51,8 +52,20 @@ impl Collection {
     }
 
     fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
-        // todo : implement
-        Ok(())
+        if self.index_names == None {
+            return Err(DatabaseError::IndexDoNotExists)
+        }
+
+        let mut items = self.index_names.unwrap();
+
+        if let Some(i) = items.get(index_name) {
+            items.remove(i);
+            return Ok(())
+        }
+
+        Err(DatabaseError::IndexDoNotExists)
+
+        // todo: remove from indexes
     }
 }
 
