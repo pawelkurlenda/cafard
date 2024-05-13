@@ -1,9 +1,7 @@
 use std::collections::{HashMap, HashSet};
-use std::io::Error;
 use serde_json::Value;
 use std::sync::{Arc, Mutex};
 use crate::databases::error::DatabaseError;
-use crate::databases::error::DatabaseError::Error;
 
 #[derive(Debug, Clone)]
 struct Document {
