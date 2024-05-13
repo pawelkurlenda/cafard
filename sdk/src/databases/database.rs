@@ -16,7 +16,8 @@ struct Collection {
     documents: HashMap<u32, Document>,
     file_path: String,
     schema: Option<HashMap<String, String>>,
-    indexes: Option<HashSet<String>>
+    index_names: Option<HashSet<String>>,
+    indexes: Option<HashMap<String, u32>>
 }
 
 impl Collection {
@@ -26,6 +27,7 @@ impl Collection {
             file_path: name.to_string(),
             documents: HashMap::new(),
             schema: None,
+            index_names: None,
             indexes: None
         }
     }
@@ -39,7 +41,7 @@ impl Collection {
     }
 
     fn create_index_1(&self, index_name: &str, is_unique: bool) -> Result<String, DatabaseError> {
-        // todo : implement
+        // todo : implement index_name example: name_1_age_1
         Ok("true".to_string())
     }
 
