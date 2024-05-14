@@ -26,8 +26,8 @@ impl Collection {
             file_path: name.to_string(),
             documents: HashMap::new(),
             schema: None,
-            index_names: None,
-            indexes: None
+            index_names: Mutex::new(None),
+            indexes: Mutex::new(None)
         }
     }
 
