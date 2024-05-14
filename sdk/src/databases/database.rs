@@ -9,14 +9,14 @@ struct Document {
     data: Value,  // todo: Using serde_json::Value to store arbitrary JSON data
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 struct Collection {
     name: String,
     documents: HashMap<u32, Document>,
     file_path: String,
     schema: Option<HashMap<String, String>>,
-    index_names: Option<HashSet<String>>,
-    indexes: Option<HashMap<String, u32>>
+    index_names: Mutex<Option<HashSet<String>>>,
+    indexes: Mutex<Option<HashMap<String, u32>>>
 }
 
 impl Collection {
