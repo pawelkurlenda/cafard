@@ -49,6 +49,10 @@ impl Collection {
         Ok("true".to_string())
     }
 
+    fn get_index_names(&self) -> HashSet<String> {
+        self.index_names.lock().unwrap().as_mut().unwrap()
+    }
+
     fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
         if self.index_names == None {
             return Err(DatabaseError::IndexDoNotExists)
