@@ -54,16 +54,24 @@ impl Collection {
             return Err(DatabaseError::IndexDoNotExists)
         }
 
-        let mut items = self.index_names.unwrap();
+        let mut items = self.index_names.lock().unwrap();
+        let a = items.get(index_name);
 
-        if let Some(i) = items.get(index_name) {
-            items.remove(i);
-            return Ok(())
+        if a == None {
+            return Err(DatabaseError::IndexDoNotExists)
         }
 
-        Err(DatabaseError::IndexDoNotExists)
+        items.remove(a);
 
         // todo: remove from indexes
+
+        let mut items_indexes = self.indexes.lock().unwrap();
+
+        if let Some(indexes) = items_indexes.get(index_name) {
+            items_indexes.unwrap().remove(indexes);
+        }
+
+        Ok(())
     }
 }
 
