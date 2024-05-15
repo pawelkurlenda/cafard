@@ -73,6 +73,25 @@ impl Collection {
 
         Ok(())
     }
+
+    fn drop_index_by_name_2(&self, index_name: &str) -> Result<(), DatabaseError> {
+        let mut index_names_guard = self.index_names.lock().unwrap();
+        let mut indexes_guard = self.indexes.lock().unwrap();
+
+        if let Some(index_names) = index_names_guard.as_mut() {
+            if index_names.remove(index_name) {
+                // If index_name successfully removed from index_names, also try to remove from indexes
+                if let Some(indexes) = indexes_guard.as_mut() {
+                    indexes.remove(index_name);
+                }
+                Ok(())
+            } else {
+                Err(DatabaseError::IndexDoNotExists)
+            }
+        } else {
+            Err(DatabaseError::IndexDoNotExists)
+        }
+    }
 }
 
 #[derive(Debug)]
