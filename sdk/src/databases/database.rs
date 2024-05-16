@@ -49,8 +49,13 @@ impl Collection {
         Ok("true".to_string())
     }
 
-    fn get_index_names(&self) -> HashSet<String> {
-        self.index_names.lock().unwrap().as_mut().unwrap()
+    fn get_index_names(&self) -> Vec<String> {
+        let index_names_lock = self.index_names.lock().unwrap();
+        if let Some(index_names) = &*index_names_lock {
+            index_names.iter().cloned().collect()
+        } else {
+            Vec::new()
+        }
     }
 
     fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
