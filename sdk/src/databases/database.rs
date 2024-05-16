@@ -15,8 +15,16 @@ struct Collection {
     documents: HashMap<u32, Document>,
     file_path: String,
     schema: Option<HashMap<String, String>>,
-    index_names: Mutex<Option<HashSet<String>>>,
+    //index_names: Mutex<Option<HashSet<String>>>,
+    index_names: Mutex<Option<HashMap<String, IndexSetting>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
+}
+
+#[derive(Debug)]
+struct IndexSetting {
+    name: String,
+    is_unique: bool,
+    fields:
 }
 
 impl Collection {
