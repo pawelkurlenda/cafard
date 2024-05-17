@@ -23,7 +23,15 @@ pub struct Collection {
 
 #[derive(Debug)]
 pub struct CollectionSchema {
+    fields: Vec<FieldSchema>
+}
 
+#[derive(Debug)]
+pub struct FieldSchema {
+    name: String,
+    is_primary_key: bool,
+    is_row_version: bool,
+    field_type: String // todo: how to store field type (int, decimal, date, string)
 }
 
 #[derive(Debug)]
