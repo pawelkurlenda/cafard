@@ -14,17 +14,23 @@ pub struct Collection {
     name: String,
     documents: HashMap<u32, Document>,
     file_path: String,
-    schema: Option<HashMap<String, String>>,
+    schema_1: Option<HashMap<String, String>>,
+    schema_2: Option<CollectionSchema>,
     //index_names: Mutex<Option<HashSet<String>>>,
     index_names: Mutex<Option<HashMap<String, IndexSetting>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
 }
 
 #[derive(Debug)]
+pub struct CollectionSchema {
+
+}
+
+#[derive(Debug)]
 pub struct IndexSetting {
     name: String,
     is_unique: bool,
-    fields:
+    //fields:
 }
 
 impl Collection {
@@ -33,7 +39,8 @@ impl Collection {
             name: name.to_string(),
             file_path: name.to_string(),
             documents: HashMap::new(),
-            schema: None,
+            schema_1: None,
+            schema_2: None,
             index_names: Mutex::new(None),
             indexes: Mutex::new(None)
         }
