@@ -64,31 +64,6 @@ impl Collection {
     }
 
     fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
-        if self.index_names == None {
-            return Err(DatabaseError::IndexDoNotExists)
-        }
-
-        let mut items = self.index_names.lock().unwrap();
-        let a = items.get(index_name);
-
-        if a == None {
-            return Err(DatabaseError::IndexDoNotExists)
-        }
-
-        items.remove(a);
-
-        // todo: remove from indexes
-
-        let mut items_indexes = self.indexes.lock().unwrap();
-
-        if let Some(indexes) = items_indexes.get(index_name) {
-            items_indexes.unwrap().remove(indexes);
-        }
-
-        Ok(())
-    }
-
-    fn drop_index_by_name_2(&self, index_name: &str) -> Result<(), DatabaseError> {
         let mut index_names_guard = self.index_names.lock().unwrap();
         let mut indexes_guard = self.indexes.lock().unwrap();
 
