@@ -1,13 +1,10 @@
 use std::collections::{HashMap, HashSet};
 use std::sync::Mutex;
 use serde_json::Value;
+use crate::databases::document::Document;
 use crate::databases::error::DatabaseError;
-
-#[derive(Debug, Clone)]
-pub struct Document {
-    id: u32,
-    data: Value,  // todo: Using serde_json::Value to store arbitrary JSON data
-}
+use crate::databases::field::FieldSchema;
+use crate::databases::index::IndexSetting;
 
 #[derive(Debug)]
 pub struct Collection {
@@ -24,21 +21,6 @@ pub struct Collection {
 #[derive(Debug)]
 pub struct CollectionSchema {
     fields: Vec<FieldSchema>
-}
-
-#[derive(Debug)]
-pub struct FieldSchema {
-    name: String,
-    is_primary_key: bool,
-    is_row_version: bool,
-    field_type: String // todo: how to store field type (int, decimal, date, string)
-}
-
-#[derive(Debug)]
-pub struct IndexSetting {
-    name: String,
-    is_unique: bool,
-    //fields:
 }
 
 impl Collection {

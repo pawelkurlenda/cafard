@@ -1,3 +1,6 @@
+pub mod error;
 pub mod database;
 pub mod collection;
-pub mod error;
+pub mod document;
+pub mod index;
+pub mod field;
