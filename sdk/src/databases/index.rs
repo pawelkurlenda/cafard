@@ -1,7 +1,7 @@
 
 
 #[derive(Debug)]
-pub struct IndexSetting {
+pub struct IndexSchema {
     name: String,
     is_unique: bool,
     //fields:

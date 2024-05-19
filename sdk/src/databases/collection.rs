@@ -4,7 +4,7 @@ use serde_json::Value;
 use crate::databases::document::Document;
 use crate::databases::error::DatabaseError;
 use crate::databases::field::FieldSchema;
-use crate::databases::index::IndexSetting;
+use crate::databases::index::IndexSchema;
 
 #[derive(Debug)]
 pub struct Collection {
@@ -14,7 +14,7 @@ pub struct Collection {
     schema_1: Option<HashMap<String, String>>,
     schema_2: Option<CollectionSchema>,
     //index_names: Mutex<Option<HashSet<String>>>,
-    index_names: Mutex<Option<HashMap<String, IndexSetting>>>,
+    index_names: Mutex<Option<HashMap<String, IndexSchema>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
 }
 
@@ -54,6 +54,16 @@ impl Collection {
         Ok("true".to_string())
     }
 
+    fn get_index_schema_by_name(&self, index_name: &str) -> Result<&IndexSchema, DatabaseError> {
+        let mut index_names_guard = self.index_names.lock().unwrap();
+
+        if let Some(index_namee) = index_names_guard.as_mut().unwrap().get(index_name) {
+            Ok(index_namee)
+        } else {
+            Err(DatabaseError::IndexDoNotExists)
+        }
+    }
+
     fn get_index_names(&self) -> Vec<String> {
         let index_names_lock = self.index_names.lock().unwrap();
         if let Some(index_names) = &*index_names_lock {
@@ -69,7 +79,6 @@ impl Collection {
 
         if let Some(index_names) = index_names_guard.as_mut() {
             if index_names.remove(index_name) {
-                // If index_name successfully removed from index_names, also try to remove from indexes
                 if let Some(indexes) = indexes_guard.as_mut() {
                     indexes.remove(index_name);
                 }
