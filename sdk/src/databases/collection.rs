@@ -13,7 +13,6 @@ pub struct Collection {
     file_path: String,
     schema_1: Option<HashMap<String, String>>,
     schema_2: Option<CollectionSchema>,
-    //index_names: Mutex<Option<HashSet<String>>>,
     index_names: Mutex<Option<HashMap<String, IndexSchema>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
 }

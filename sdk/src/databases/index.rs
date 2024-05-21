@@ -2,7 +2,7 @@
 pub struct IndexSchema {
     name: String,
     is_unique: bool,
-    fields: Vec<IndexFieldSchema>
+    fields: Box<[IndexFieldSchema]>
 }
 
 #[derive(Debug)]
@@ -18,7 +18,7 @@ pub enum IndexFieldOrder {
 }
 
 impl IndexFieldOrder {
-    fn string_value(&self) -> &str {
+    fn to_string(&self) -> &str {
         match &self {
             IndexFieldOrder::ASC => "1",
             IndexFieldOrder::DSC => "-1",
@@ -27,22 +27,24 @@ impl IndexFieldOrder {
 }
 
 impl IndexSchema {
-    fn new(fields: Vec<IndexFieldSchema>, is_unique: bool) -> Self {
+    pub fn new(fields: Vec<IndexFieldSchema>, is_unique: bool) -> Self {
         let name = fields
             .iter()
             .map(|field| {
                 format!(
                     "{}_{}",
                     field.field_name,
-                    field.order.string_value()
+                    field.order.to_string()
                 )
             })
             .collect::<Vec<_>>()
             .join("_");
 
+        let boxed_fields = fields.into_boxed_slice();
+
         IndexSchema {
+            fields: boxed_fields,
             is_unique,
-            fields,
             name
         }
     }
