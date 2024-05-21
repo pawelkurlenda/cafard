@@ -1,8 +1,3 @@
-use std::collections::HashMap;
-use std::sync::Mutex;
-use crate::databases::collection::Collection;
-use crate::databases::error::DatabaseError;
-
 #[derive(Debug)]
 pub struct IndexSchema {
     name: String,
@@ -22,16 +17,33 @@ pub enum IndexFieldOrder {
     DSC
 }
 
-impl IndexSchema {
-    fn new(fields: Vec<IndexFieldSchema>, is_unique: bool) -> Result<Self, DatabaseError> {
-        //fields.iter()
-        // todo: check for duplicates, consider to valid that earlier where fields existing is validate
-        // combine value for NAME
+impl IndexFieldOrder {
+    fn string_value(&self) -> &str {
+        match &self {
+            IndexFieldOrder::ASC => "1",
+            IndexFieldOrder::DSC => "-1",
+        }
+    }
+}
 
-        Ok(IndexSchema {
-            is_unique: is_unique,
-            fields: fields,
-            name: "".to_string()
-        })
+impl IndexSchema {
+    fn new(fields: Vec<IndexFieldSchema>, is_unique: bool) -> Self {
+        let name = fields
+            .iter()
+            .map(|field| {
+                format!(
+                    "{}_{}",
+                    field.field_name,
+                    field.order.string_value()
+                )
+            })
+            .collect::<Vec<_>>()
+            .join("_");
+
+        IndexSchema {
+            is_unique,
+            fields,
+            name
+        }
     }
 }
