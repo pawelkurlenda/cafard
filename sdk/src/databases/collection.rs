@@ -64,11 +64,12 @@ impl Collection {
     }
 
     fn get_index_schemas(&self) -> Vec<&IndexSchema> {
-        let mut index_names_guard = self.index_names.lock().unwrap();
-
-        index_names_guard.iter()
-
-        // todo: finish implementation
+        let index_names_guard = self.index_names.lock().unwrap();
+        if let Some(ref indices) = *index_names_guard {
+            indices.values().cloned().collect()
+        } else {
+            Vec::new()
+        }
     }
 
     fn get_index_names(&self) -> Vec<String> {
