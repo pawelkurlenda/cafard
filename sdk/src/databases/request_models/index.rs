@@ -1,6 +1,4 @@
-use geo::Point;
 use crate::databases::error::DatabaseError;
-use crate::geospatials::error::GeospatialError;
 
 pub struct CreateIndexRequest {
     is_unique: bool,

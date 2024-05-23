@@ -5,6 +5,7 @@ use crate::databases::document::Document;
 use crate::databases::error::DatabaseError;
 use crate::databases::field::FieldSchema;
 use crate::databases::index::IndexSchema;
+use crate::databases::request_models::index::CreateIndexRequest;
 
 #[derive(Debug)]
 pub struct Collection {
@@ -50,6 +51,15 @@ impl Collection {
 
     fn create_index_2(&self, index_name: HashSet<String>, is_unique: bool) -> Result<String, DatabaseError> {
         // todo : implement
+        Ok("true".to_string())
+    }
+
+    fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
+        // todo : implement
+
+        let mut index_names_guard = self.index_names.lock().unwrap();
+        index_names_guard.as_mut().unwrap().insert()
+
         Ok("true".to_string())
     }
 
