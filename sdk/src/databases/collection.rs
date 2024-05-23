@@ -57,9 +57,10 @@ impl Collection {
     fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
         // todo : implement
 
+        let new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
 
         let mut index_names_guard = self.index_schemas.lock().unwrap();
-        index_names_guard.as_mut().unwrap().insert()
+        index_names_guard.as_mut().unwrap().insert(new_index_schema.get_name(), new_index_schema);
 
         Ok("true".to_string())
     }

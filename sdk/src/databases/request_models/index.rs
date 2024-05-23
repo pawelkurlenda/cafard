@@ -1,13 +1,13 @@
 use crate::databases::error::DatabaseError;
 
 pub struct CreateIndexRequest {
-    is_unique: bool,
-    fields: Vec<CreateIndexFieldRequest>
+    pub is_unique: bool,
+    pub fields: Vec<CreateIndexFieldRequest>
 }
 
 pub struct CreateIndexFieldRequest {
     field_name: String,
-    order: crate::databases::index::IndexFieldOrder
+    order: CreateIndexFieldOrderRequest
 }
 
 #[derive(Debug)]
