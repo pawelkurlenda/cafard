@@ -14,7 +14,7 @@ pub struct Collection {
     file_path: String,
     schema_1: Option<HashMap<String, String>>,
     schema_2: Option<CollectionSchema>,
-    index_names: Mutex<Option<HashMap<String, IndexSchema>>>,
+    index_schemas: Mutex<Option<HashMap<String, IndexSchema>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
 }
 
@@ -31,7 +31,7 @@ impl Collection {
             documents: HashMap::new(),
             schema_1: None,
             schema_2: None,
-            index_names: Mutex::new(None),
+            index_schemas: Mutex::new(None),
             indexes: Mutex::new(None)
         }
     }
@@ -57,14 +57,15 @@ impl Collection {
     fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
         // todo : implement
 
-        let mut index_names_guard = self.index_names.lock().unwrap();
+
+        let mut index_names_guard = self.index_schemas.lock().unwrap();
         index_names_guard.as_mut().unwrap().insert()
 
         Ok("true".to_string())
     }
 
     fn get_index_schema_by_name(&self, index_name: &str) -> Result<&IndexSchema, DatabaseError> {
-        let mut index_names_guard = self.index_names.lock().unwrap();
+        let mut index_names_guard = self.index_schemas.lock().unwrap();
 
         if let Some(index_namee) = index_names_guard.as_mut().unwrap().get(index_name) {
             Ok(index_namee)
@@ -74,7 +75,7 @@ impl Collection {
     }
 
     fn get_index_schemas(&self) -> Vec<&IndexSchema> {
-        let index_names_guard = self.index_names.lock().unwrap();
+        let index_names_guard = self.index_schemas.lock().unwrap();
         if let Some(ref indices) = *index_names_guard {
             indices.values().cloned().collect()
         } else {
@@ -83,7 +84,7 @@ impl Collection {
     }
 
     fn get_index_names(&self) -> Vec<String> {
-        let index_names_lock = self.index_names.lock().unwrap();
+        let index_names_lock = self.index_schemas.lock().unwrap();
         if let Some(index_names) = &*index_names_lock {
             index_names.iter().cloned().collect()
         } else {
@@ -92,7 +93,7 @@ impl Collection {
     }
 
     fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
-        let mut index_names_guard = self.index_names.lock().unwrap();
+        let mut index_names_guard = self.index_schemas.lock().unwrap();
         let mut indexes_guard = self.indexes.lock().unwrap();
 
         if let Some(index_names) = index_names_guard.as_mut() {
