@@ -12,8 +12,9 @@ pub struct Collection {
     name: String,
     documents: HashMap<u32, Document>,
     file_path: String,
-    schema_1: Option<HashMap<String, String>>,
-    schema_2: Option<CollectionSchema>,
+    //schema_1: Option<HashMap<String, String>>,
+    schemas: Mutex<Option<CollectionSchema>>,
+    //schemas: Mutex<Option<Vec<FieldSchema>>>,
     index_schemas: Mutex<Option<HashMap<String, IndexSchema>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
 }
@@ -23,14 +24,23 @@ pub struct CollectionSchema {
     fields: Vec<FieldSchema>
 }
 
+impl CollectionSchema {
+    fn check_fields_availability(&self, fields_to_check: Vec<&str>) -> Result<(), DatabaseError> {
+
+
+        Ok(())
+    }
+}
+
 impl Collection {
     fn new(name: &str) -> Self {
         Collection {
             name: name.to_string(),
             file_path: name.to_string(),
             documents: HashMap::new(),
-            schema_1: None,
-            schema_2: None,
+            //schema_1: None,
+            //schemas_2: Mutex::new(None),
+            schemas: Mutex::new(None),
             index_schemas: Mutex::new(None),
             indexes: Mutex::new(None)
         }
@@ -55,11 +65,11 @@ impl Collection {
     }
 
     fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
-        // todo : implement
+        let mut index_names_guard = self.index_schemas.lock().unwrap();
+        let mut schemas_guard = self.schemas.lock().unwrap();
 
         let new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
 
-        let mut index_names_guard = self.index_schemas.lock().unwrap();
         index_names_guard.as_mut().unwrap().insert(new_index_schema.get_name(), new_index_schema);
 
         Ok("true".to_string())
