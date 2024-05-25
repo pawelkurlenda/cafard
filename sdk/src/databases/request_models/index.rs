@@ -6,8 +6,8 @@ pub struct CreateIndexRequest {
 }
 
 pub struct CreateIndexFieldRequest {
-    field_name: String,
-    order: CreateIndexFieldOrderRequest
+    pub field_name: String,
+    pub order: CreateIndexFieldOrderRequest
 }
 
 #[derive(Debug)]

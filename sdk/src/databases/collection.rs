@@ -66,7 +66,14 @@ impl Collection {
 
     fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
         let mut index_names_guard = self.index_schemas.lock().unwrap();
-        let mut schemas_guard = self.schemas.lock().unwrap();
+        let schemas_guard = self.schemas.lock().unwrap();
+
+        let field_names = create_index_request.fields
+            .iter()
+            .map(|item| item.field_name)
+            .collect();
+
+        let a = schemas_guard.unwrap().check_fields_availability(field_names);
 
         let new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
 
