@@ -1,9 +1,9 @@
 
 #[derive(Debug)]
 pub struct FieldSchema {
-    name: String,
-    is_primary_key: bool,
-    is_autoincrement: bool,
-    is_row_version: bool,
-    field_type: String // todo: how to store field type (int, decimal, date, string)
+    pub name: String,
+    pub is_primary_key: bool,
+    pub is_autoincrement: bool,
+    pub is_row_version: bool,
+    pub field_type: String // todo: how to store field type (int, decimal, date, string)
 }

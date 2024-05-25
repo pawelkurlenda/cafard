@@ -26,7 +26,20 @@ pub struct CollectionSchema {
 
 impl CollectionSchema {
     fn check_fields_availability(&self, fields_to_check: Vec<&str>) -> Result<(), DatabaseError> {
+        let mut counts = HashMap::new();
+        for field_to_check in fields_to_check {
+            let count = counts.entry(field_to_check).or_insert(0);
+            *count += 1;
+            if *count > 1 {
+                return Err(DatabaseError::IndexFieldDuplication)
+            }
 
+            let is_field_exists = &self.fields.iter().any(|&x| x.name == field_to_check);
+
+            if !is_field_exists {
+                return Err(DatabaseError::FieldDoesNotExists)
+            }
+        }
 
         Ok(())
     }
@@ -73,11 +86,17 @@ impl Collection {
             .map(|item| item.field_name)
             .collect();
 
-        let a = schemas_guard.unwrap().check_fields_availability(field_names);
+        let check_fields_availability_result = schemas_guard.unwrap().check_fields_availability(field_names);
+
+        if check_fields_availability_result.is_err() {
+            return Err(check_fields_availability_result.err().unwrap());
+        }
 
         let new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
 
         index_names_guard.as_mut().unwrap().insert(new_index_schema.get_name(), new_index_schema);
+
+        // todo: document values for index to indexes field
 
         Ok("true".to_string())
     }
