@@ -4,4 +4,5 @@ pub mod collection;
 pub mod document;
 pub mod index;
 pub mod field;
-mod request_models;
+pub mod collection_schema;
+pub mod request_models;

@@ -1,6 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::sync::Mutex;
 use serde_json::Value;
+use crate::databases::collection_schema::CollectionSchema;
 use crate::databases::document::Document;
 use crate::databases::error::DatabaseError;
 use crate::databases::field::FieldSchema;
@@ -17,32 +18,6 @@ pub struct Collection {
     //schemas: Mutex<Option<Vec<FieldSchema>>>,
     index_schemas: Mutex<Option<HashMap<String, IndexSchema>>>,
     indexes: Mutex<Option<HashMap<String, u32>>>
-}
-
-#[derive(Debug)]
-pub struct CollectionSchema {
-    fields: Vec<FieldSchema>
-}
-
-impl CollectionSchema {
-    fn check_fields_availability(&self, fields_to_check: Vec<&str>) -> Result<(), DatabaseError> {
-        let mut counts = HashMap::new();
-        for field_to_check in fields_to_check {
-            let count = counts.entry(field_to_check).or_insert(0);
-            *count += 1;
-            if *count > 1 {
-                return Err(DatabaseError::IndexFieldDuplication)
-            }
-
-            let is_field_exists = &self.fields.iter().any(|&x| x.name == field_to_check);
-
-            if !is_field_exists {
-                return Err(DatabaseError::FieldDoesNotExists)
-            }
-        }
-
-        Ok(())
-    }
 }
 
 impl Collection {
@@ -80,6 +55,7 @@ impl Collection {
     fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
         let mut index_names_guard = self.index_schemas.lock().unwrap();
         let schemas_guard = self.schemas.lock().unwrap();
+        let mut indexes_guard = self.indexes.lock().unwrap();
 
         let field_names = create_index_request.fields
             .iter()
@@ -93,12 +69,13 @@ impl Collection {
         }
 
         let new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
+        let index_name = new_index_schema.name;
 
-        index_names_guard.as_mut().unwrap().insert(new_index_schema.get_name(), new_index_schema);
+        index_names_guard.as_mut().unwrap().insert(index_name, new_index_schema);
 
         // todo: document values for index to indexes field
 
-        Ok("true".to_string())
+        Ok(new_index_schema.name.to_string())
     }
 
     fn get_index_schema_by_name(&self, index_name: &str) -> Result<&IndexSchema, DatabaseError> {

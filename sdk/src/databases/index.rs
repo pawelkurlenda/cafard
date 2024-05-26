@@ -1,6 +1,6 @@
 #[derive(Debug)]
 pub struct IndexSchema {
-    name: String,
+    pub name: String,
     is_unique: bool,
     fields: Box<[IndexFieldSchema]>
 }
@@ -47,9 +47,5 @@ impl IndexSchema {
             is_unique,
             name
         }
-    }
-
-    pub fn get_name(&self) -> String {
-        self.name.to_string()
     }
 }
