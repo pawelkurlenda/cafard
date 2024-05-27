@@ -123,4 +123,17 @@ impl Collection {
             Err(DatabaseError::IndexDoNotExists)
         }
     }
+
+    fn delete_field(&self, field_name: &str) -> Result<(), DatabaseError> {
+        // todo: implement
+
+        // remove from
+        //
+        // schemas,
+        // documents,
+        // index_schemas, allow to remove if part of index? or return error?
+        // indexes
+
+        Ok(())
+    }
 }
