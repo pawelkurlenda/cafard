@@ -106,7 +106,7 @@ impl Collection {
         }
     }
 
-    fn drop_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
+    fn delete_index_by_name(&self, index_name: &str) -> Result<(), DatabaseError> {
         let mut index_names_guard = self.index_schemas.lock().unwrap();
         let mut indexes_guard = self.indexes.lock().unwrap();
 
