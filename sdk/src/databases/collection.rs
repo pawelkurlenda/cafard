@@ -136,4 +136,28 @@ impl Collection {
 
         Ok(())
     }
+
+    fn add_field(&self) -> Result<(), DatabaseError> {
+        // todo: implement
+
+        // add to
+        //
+        // schemas,
+        // all documents
+
+        Ok(())
+    }
+
+    fn update_field(&self) -> Result<(), DatabaseError> {
+        // todo: implement
+
+        // update in
+        //
+        // schemas,
+        // documents,
+        // index_schemas
+        // indexes
+
+        Ok(())
+    }
 }
