@@ -34,8 +34,23 @@ impl Collection {
         }
     }
 
-    fn insert_document(&mut self, doc: Document) {
+    fn insert_document(&mut self, doc: Document) -> u32 {
         self.documents.insert(doc.id, doc);
+
+        0
+
+        // todo: implement
+        //
+        // add to indexes
+    }
+
+    fn insert_documents(&mut self, doc: Vec<Document>) -> Vec<u32> {
+        //self.documents.insert(doc.id, doc);
+
+        Vec::new()
+        // todo: implement
+        //
+        // add to indexes
     }
 
     fn select_document_by_id(&self, id: u32) -> Option<&Document> {
