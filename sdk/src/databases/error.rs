@@ -20,4 +20,7 @@ pub enum DatabaseError {
     IndexFieldDuplication = 7,
     #[error("Field does not exists")]
     FieldDoesNotExists = 8,
+
+    #[error("Field already exists")]
+    FieldAlreadyExists = 9,
 }

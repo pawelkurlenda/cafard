@@ -152,7 +152,7 @@ impl Collection {
         Ok(())
     }
 
-    fn add_field(&self) -> Result<(), DatabaseError> {
+    fn add_field(&self, field: Vec<FieldSchema>) -> Result<(), DatabaseError> {
         // todo: implement
 
         // add to
@@ -163,7 +163,7 @@ impl Collection {
         Ok(())
     }
 
-    fn update_field(&self) -> Result<(), DatabaseError> {
+    fn update_field(&self, field: Vec<FieldSchema>) -> Result<(), DatabaseError> {
         // todo: implement
 
         // update in
