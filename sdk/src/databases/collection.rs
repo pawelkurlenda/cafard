@@ -11,13 +11,13 @@ use crate::databases::request_models::index::CreateIndexRequest;
 #[derive(Debug)]
 pub struct Collection {
     name: String,
-    documents: HashMap<u32, Document>,
+    documents: HashMap<u64, Document>,
     file_path: String,
     //schema_1: Option<HashMap<String, String>>,
     schemas: Mutex<Option<CollectionSchema>>,
     //schemas: Mutex<Option<Vec<FieldSchema>>>,
     index_schemas: Mutex<Option<HashMap<String, IndexSchema>>>,
-    indexes: Mutex<Option<HashMap<String, u32>>>
+    indexes: Mutex<Option<HashMap<String, u64>>>
 }
 
 impl Collection {
@@ -34,7 +34,7 @@ impl Collection {
         }
     }
 
-    fn insert_document(&mut self, doc: Document) -> u32 {
+    fn insert_document(&mut self, doc: Document) -> u64 {
         self.documents.insert(doc.id, doc);
 
         0
@@ -44,7 +44,7 @@ impl Collection {
         // add to indexes
     }
 
-    fn insert_documents(&mut self, doc: Vec<Document>) -> Vec<u32> {
+    fn insert_documents(&mut self, doc: Vec<Document>) -> Vec<u64> {
         //self.documents.insert(doc.id, doc);
 
         Vec::new()
@@ -53,7 +53,7 @@ impl Collection {
         // add to indexes
     }
 
-    fn select_document_by_id(&self, id: u32) -> Option<&Document> {
+    fn select_document_by_id(&self, id: u64) -> Option<&Document> {
         self.documents.get(&id)
     }
 
