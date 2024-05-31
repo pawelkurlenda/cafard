@@ -142,6 +142,7 @@ impl Collection {
     fn delete_field(&self, field_name: &str) -> Result<(), DatabaseError> {
         // todo: implement
 
+        // check status
         // remove from
         //
         // schemas,
