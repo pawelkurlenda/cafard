@@ -26,6 +26,10 @@ impl CollectionSchema {
 
         Ok(())
     }
+
+    fn try_remove_field(&self, field_name: &str) -> Result<(), DatabaseError> {
+
+    }
 }
 
 #[cfg(test)]

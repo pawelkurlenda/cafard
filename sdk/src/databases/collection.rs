@@ -142,7 +142,11 @@ impl Collection {
     fn delete_field(&self, field_name: &str) -> Result<(), DatabaseError> {
         // todo: implement
 
-        // check status
+        let mut schemas_guard = self.schemas.lock().unwrap();
+        let mut index_schemas_guard = self.index_schemas.lock().unwrap();
+        let mut index_guard = self.indexes.lock().unwrap();
+        let mut documents_guard = self.documents.lock().unwrap();
+
         // remove from
         //
         // schemas,
