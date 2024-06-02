@@ -1,5 +1,5 @@
 use std::collections::{HashMap, HashSet};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use serde_json::Value;
 use crate::databases::collection_schema::CollectionSchema;
 use crate::databases::document::Document;
@@ -21,8 +21,8 @@ pub struct Collection {
 }
 
 impl Collection {
-    fn new(name: &str) -> Self {
-        Collection {
+    fn new(name: &str) -> Arc<Self> {
+        Arc::new(Collection {
             name: name.to_string(),
             file_path: name.to_string(),
             documents: HashMap::new(),
@@ -31,7 +31,7 @@ impl Collection {
             schemas: Mutex::new(None),
             index_schemas: Mutex::new(None),
             indexes: Mutex::new(None)
-        }
+        })
     }
 
     fn insert_document(&mut self, doc: Document) -> u64 {
