@@ -23,4 +23,10 @@ impl Database {
     pub fn get_collection(&self, name: &str) -> Option<&Collection> {
         self.collections.get(name)
     }
+
+    pub fn delete_collection(&self, name: &str) -> Result<(), DatabaseError> {
+        // todo: implement
+
+        Ok(())
+    }
 }
