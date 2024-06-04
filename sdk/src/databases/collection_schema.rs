@@ -8,7 +8,7 @@ pub struct CollectionSchema {
 }
 
 impl CollectionSchema {
-    fn check_fields_availability(&self, fields_to_check: Vec<&str>) -> Result<(), DatabaseError> {
+    pub fn check_fields_availability(&self, fields_to_check: Vec<&str>) -> Result<(), DatabaseError> {
         let mut counts = HashMap::new();
         for field_to_check in fields_to_check {
             let count = counts.entry(field_to_check).or_insert(0);
