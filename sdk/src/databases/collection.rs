@@ -67,7 +67,7 @@ impl Collection {
         Ok("true".to_string())
     }
 
-    fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<String, DatabaseError> {
+    fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<&str, DatabaseError> {
         let mut index_names_guard = self.index_schemas.lock().unwrap();
         let schemas_guard = self.schemas.lock().unwrap();
         let mut indexes_guard = self.indexes.lock().unwrap();
@@ -83,14 +83,14 @@ impl Collection {
             return Err(check_fields_availability_result.err().unwrap());
         }
 
-        let new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
-        let index_name = new_index_schema.name;
+        let mut new_index_schema = IndexSchema::new(create_index_request.fields, create_index_request.is_unique);
+        let index_name = &new_index_schema.name;
 
-        index_names_guard.as_mut().unwrap().insert(index_name, new_index_schema);
+        index_names_guard.as_mut().unwrap().insert(index_name.to_string(), new_index_schema);
 
         // todo: document values for index to indexes field
 
-        Ok(new_index_schema.name.to_string())
+        Ok(index_name)
     }
 
     fn get_index_schema_by_name(&self, index_name: &str) -> Result<&IndexSchema, DatabaseError> {
