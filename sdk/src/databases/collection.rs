@@ -57,7 +57,7 @@ impl Collection {
         self.documents.get(&id)
     }
 
-    fn create_index_1(&self, index_name: &str, is_unique: bool) -> Result<String, DatabaseError> {
+    /*fn create_index_1(&self, index_name: &str, is_unique: bool) -> Result<String, DatabaseError> {
         // todo : implement index_name example: name_1_age_1
         Ok("true".to_string())
     }
@@ -65,7 +65,7 @@ impl Collection {
     fn create_index_2(&self, index_name: HashSet<String>, is_unique: bool) -> Result<String, DatabaseError> {
         // todo : implement
         Ok("true".to_string())
-    }
+    }*/
 
     fn create_index(&self, create_index_request: CreateIndexRequest) -> Result<&str, DatabaseError> {
         let mut index_names_guard = self.index_schemas.lock().unwrap();
