@@ -34,22 +34,24 @@ impl Collection {
         })
     }
 
-    fn insert_document(&mut self, doc: Document) -> u64 {
+    fn insert_document(&mut self, doc: Document) -> Result<u64, DatabaseError> {
         self.documents.insert(doc.id, doc);
 
-        0
+        Ok(0)
 
         // todo: implement
         //
+        // valid documents
         // add to indexes
     }
 
-    fn insert_documents(&mut self, doc: Vec<Document>) -> Vec<u64> {
+    fn insert_documents(&mut self, doc: Vec<Document>) -> Result<Vec<u64>, DatabaseError> {
         //self.documents.insert(doc.id, doc);
 
-        Vec::new()
+        Ok(Vec::new())
         // todo: implement
         //
+        // valid documents
         // add to indexes
     }
 
