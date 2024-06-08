@@ -17,8 +17,10 @@ impl Database {
         })
     }
 
-    pub fn add_collection(&mut self, collection: Collection) {
+    pub fn add_collection(&mut self, collection: Collection) -> Result<(), DatabaseError> {
         //self.collections.insert(collection.name.clone(), collection);
+
+        Ok(())
     }
 
     pub fn get_collection(&self, name: &str) -> Option<&Collection> {
