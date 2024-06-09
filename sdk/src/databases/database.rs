@@ -23,7 +23,7 @@ impl Database {
         Ok(())
     }
 
-    pub fn get_collection(&self, name: &str) -> Option<&Collection> {
+    pub fn get_collection(&self, name: &str) -> Result<&Collection, DatabaseError> {
         self.collections.get(name)
     }
 
